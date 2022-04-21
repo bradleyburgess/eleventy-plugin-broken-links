@@ -2,7 +2,7 @@
   "name": "eleventy-plugin-broken-links",
   "version": "1.0.0",
   "description": "An Eleventy plugin to check for broken external links",
-  "homepage": "",
+  "homepage": "https://github.com/bradleyburgess/eleventy-plugin-broken-links",
   "main": ".eleventy.js",
   "scripts": {
     "start": "eleventy --serve",
