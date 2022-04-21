@@ -1,4 +1,5 @@
 const { parse } = require("node-html-parser");
+const { AssetCache } = require("@11ty/eleventy-fetch");
 const urlStatusCode = require("url-status-code");
 const chalk = require("chalk");
 
@@ -11,26 +12,24 @@ const isBroken = (code) => code >= 400 && code <= 504;
 // redirect is any 3xx status
 const isRedirect = (code) => code >= 300 && code < 400;
 
-const checkLink = (url) => {
-  return new Promise((resolve, reject) => {
-    urlStatusCode(url)
-      .then((code) => {
-        resolve({
-          url,
-          broken: isBroken(code),
-          redirect: isRedirect(code),
-        });
-      })
-      .catch((error) => {
-        // return broken if address not found
-        if (error.code === "ENOTFOUND")
-          resolve({
-            url,
-            broken: true,
-            redirect: false,
-          });
-      });
-  });
+const checkLink = async (url, duration) => {
+  const asset = new AssetCache(url);
+  if (asset.isCacheValid(duration)) {
+    return asset.getCachedValue();
+  }
+
+  const data = { url };
+  try {
+    const httpStatusCode = await urlStatusCode(url);
+    data.httpStatusCode = httpStatusCode;
+  } catch (error) {
+    if (error.code === "ENOTFOUND") {
+      data.httpStatusCode = 404;
+    }
+  } finally {
+    await asset.save(data, "json");
+    return data;
+  }
 };
 
 function getExternalLinks(content) {
@@ -45,6 +44,7 @@ module.exports = function (eleventyConfig, _options) {
   const defaults = {
     broken: "warn",
     redirect: "warn",
+    cacheDuration: "1d",
   };
 
   // merge default and user options
@@ -58,17 +58,20 @@ module.exports = function (eleventyConfig, _options) {
     // Go page by page
     Object.keys(externalLinks).forEach(async (page) => {
       externalLinksWithStatus[page] = await Promise.all(
-        externalLinks[page].map((link) => checkLink(link))
+        externalLinks[page].map((link) =>
+          checkLink(link, options.cacheDuration)
+        )
       );
       // group redirect, broken, and okay links together
-      const redirectLinks = externalLinksWithStatus[page].filter(
-        (link) => link.redirect
+      const redirectLinks = externalLinksWithStatus[page].filter((link) =>
+        isRedirect(link.httpStatusCode)
       );
-      const brokenLinks = externalLinksWithStatus[page].filter(
-        (link) => link.broken
+      const brokenLinks = externalLinksWithStatus[page].filter((link) =>
+        isBroken(link.httpStatusCode)
       );
       const okayLinks = externalLinksWithStatus[page].filter(
-        (link) => !link.broken && !link.redirect
+        (link) =>
+          !isRedirect(link.httpStatusCode) && !isBroken(link.httpStatusCode)
       );
 
       // output status of each link, grouped as above

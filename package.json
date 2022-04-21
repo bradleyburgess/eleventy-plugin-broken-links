@@ -32,6 +32,7 @@
     "@11ty/eleventy": "^1.0.0"
   },
   "dependencies": {
+    "@11ty/eleventy-fetch": "^3.0.0",
     "chalk": "^4.1.0",
     "node-html-parser": "^5.3.3",
     "url-status-code": "^2.0.0"
