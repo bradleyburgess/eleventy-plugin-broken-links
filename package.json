@@ -1,0 +1,39 @@
+{
+  "name": "eleventy-plugin-broken-links",
+  "version": "1.0.0",
+  "description": "An Eleventy plugin to check for broken external links",
+  "homepage": "",
+  "main": ".eleventy.js",
+  "scripts": {
+    "start": "eleventy --serve",
+    "build": "eleventy",
+    "bump": "npm --no-git-tag-version version"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bradleyburgess/eleventy-plugin-broken-links.git"
+  },
+  "keywords": [
+    "11ty",
+    "11ty-plugin",
+    "eleventy",
+    "eleventy-plugin",
+    "broken-links"
+  ],
+  "author": {
+    "name": "Bradley Burgess",
+    "url": "https://github.com/bradleyburgess"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bradleyburgess/eleventy-plugin-broken-links/issues"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^1.0.0"
+  },
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "node-html-parser": "^5.3.3",
+    "url-status-code": "^2.0.0"
+  }
+}
