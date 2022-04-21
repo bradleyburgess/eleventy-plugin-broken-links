@@ -1,5 +1,8 @@
 ## eleventy-plugin-broken-links
 
+[![npm](https://img.shields.io/npm/v/eleventy-plugin-broken-links)](https://www.npmjs.com/package/eleventy-plugin-broken-links)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 This is an [11ty](https://www.11ty.dev/) to check for broken external links after a build.
 
 Currently it only checks _external_ links, but I might add internal links at some point. (Feel free to send a PR.)
