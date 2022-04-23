@@ -45,6 +45,7 @@ There are currently three keys to the optional `option` object passed with `elev
 | `broken`        | `"warn"` | `"warn"`, `"error"`                                                                                          | whether to warn or throw an error |
 | `redirect`      | `"warn"` | `"warn"`, `"error"`                                                                                          | same as above                     |
 | `cacheDuration` | `"1d"`   | [any value accepted](https://www.11ty.dev/docs/plugins/fetch/#change-the-cache-duration) by `eleventy-fetch` | set the duration of the cache     |
+| `loggingLevel` | `2` | `0` (silent), `1` (only show broken links), `2` (show broken and redirect), `3` (all) | set the logging level |
 
 Here's an example using all options, with the defaults:
 
@@ -56,7 +57,8 @@ module.exports = (eleventyConfig) => {
   eleventyConfig.addPlugin(brokenLinksPlugin, {
     redirect: 'warn',
     broken: 'warn',
-    cacheDuration: '1d'
+    cacheDuration: '1d',
+    loggingLevel: 2
   });
 };
 ```
