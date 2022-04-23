@@ -28,7 +28,7 @@ yarn add -D eleventy-plugin-broken-links
 #### 2. Add to `.eleventy.js` config
 
 ```js
-const brokenLinksPlugin = require('eleventy-plugin-broken-links`);
+const brokenLinksPlugin = require('eleventy-plugin-broken-links');
 
 module.exports = (eleventyConfig) => {
   eleventyConfig.addPlugin(brokenLinksPlugin);
@@ -59,7 +59,7 @@ There are currently three keys to the optional `option` object passed with `elev
 Here's an example using all options, with the defaults:
 
 ```js
-const brokenLinksPlugin = require('eleventy-plugin-broken-links`);
+const brokenLinksPlugin = require('eleventy-plugin-broken-links');
 
 module.exports = (eleventyConfig) => {
   // ... the rest of your config
