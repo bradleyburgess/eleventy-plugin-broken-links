@@ -80,5 +80,6 @@ I don't have a specific roadmap or timeline for this project, but here is a gene
 
 - [x] cache results (added in `v1.1.0`)
 - [x] allow control over logging (added in `v1.3.0`)
-- [ ] add option to exclude certain urls (domains, regex, etc.)
-- [ ] add option to exclude certain input files (folder, regex, etc.)
+- [ ] add option to exclude certain urls (specific urls, domains, regex, etc.)
+- [ ] add option to exclude certain input files (specific files, folders, regex, etc.)
+- [ ] add debugging using `debug` to hook into the `DEBUG=Eleventy*` workflow
