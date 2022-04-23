@@ -34,20 +34,23 @@ module.exports = function (eleventyConfig, _options) {
         !isBroken(store[link].getHttpStatusCode()) && !isRedirect(store[link].getHttpStatusCode())
     );
 
+    // okay links
     options.loggingLevel === 3 &&
       okayLinks.forEach((link) => {
         log().okay(`Link okay:      ${link}`);
       });
 
+    // redirects
     options.loggingLevel >= 2 &&
       redirectLinks.forEach((link) => {
         const pages = store[link].getPages();
-        log().warn(`Link redirects: ${link}`);
+        log().warn().display(`Link redirects: ${link}`);
         log().display(`HTTP Status Code: ${store[link].getHttpStatusCode()}`);
         log().display(`Used ${store[link].getLinkCount()} time(s) on these pages:`, 2);
         pages.forEach((page) => log().bullet().indent().display(page));
       });
 
+    // broken links
     options.loggingLevel >= 1 &&
       brokenLinks.forEach((link) => {
         const pages = store[link].getPages();
