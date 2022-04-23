@@ -5,6 +5,8 @@
 - added note about `.gitignore`ing `.cache` to `README`
 - added roadmap / contributing to `README`
 
+---
+
 ## 1.3.1 (04/23/2022)
 
 - patch redirect logging (wasn't showing url)
