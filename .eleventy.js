@@ -43,6 +43,7 @@ module.exports = function (eleventyConfig, _options) {
       redirectLinks.forEach((link) => {
         const pages = store[link].getPages();
         log().warn(`Link redirects: ${link}`);
+        log().display(`HTTP Status Code: ${store[link].getHttpStatusCode()}`);
         log().display(`Used ${store[link].getLinkCount()} time(s) on these pages:`, 2);
         pages.forEach((page) => log().bullet().indent().display(page));
       });
@@ -51,6 +52,7 @@ module.exports = function (eleventyConfig, _options) {
       brokenLinks.forEach((link) => {
         const pages = store[link].getPages();
         log().error().display(`Link is broken: ${link}`);
+        log().display(`HTTP Status Code: ${store[link].getHttpStatusCode()}`);
         log().display(`Used ${store[link].getLinkCount()} time(s) on these pages:`, 2);
         pages.forEach((page) => log().bullet().indent().display(page));
       });
