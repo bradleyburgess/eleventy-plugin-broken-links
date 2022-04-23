@@ -36,7 +36,16 @@ module.exports = (eleventyConfig) => {
 };
 ```
 
-#### 3. Set options
+#### 3. Add `.cache` to `.gitignore`
+
+See [this privacy notice in the `eleventy-fetch` docs](https://www.11ty.dev/docs/plugins/fetch/#installation) about why we should ignore the `.cache` directory. Unless you _really_ know what you're doing, it's probably a good idea.
+
+```bash
+.cache/
+# ... the rest of your `.gitignore`
+```
+
+#### (4. Set options)
 
 There are currently three keys to the optional `option` object passed with `eleventyConfig.addPlugin()`:
 
@@ -65,8 +74,11 @@ module.exports = (eleventyConfig) => {
 
 NOTE: If either the `broken` or `redirect` options are set to `error`, your build will not be successful if there are broken/redirected links!
 
-### Contributing
+### Roadmap / Contributing
 
-I don't have a roadmap or plan with this plugin. It's my first one, and I just needed the functionality, so wrote it rather quickly.
+I don't have a specific roadmap or timeline for this project, but here is a general idea of what the next steps are. If you would like to contribute, please feel free to [file an issue or feature request](https://github.com/bradleyburgess/eleventy-plugin-broken-links/issues), or send a PR.
 
-That said, feel free to do a PR or create an issue.
+- [x] cache results (added in `v1.1.0`)
+- [x] allow control over logging (added in `v1.3.0`)
+- [ ] add option to exclude certain urls (domains, regex, etc.)
+- [ ] add option to exclude certain input files (folder, regex, etc.)
