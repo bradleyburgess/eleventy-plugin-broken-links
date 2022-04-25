@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.3.3 (04/25/2022)
+
+- refactored `store` as an `Array` for better manipulation
+  - `ExternalLink` now includes `url` prop
+- refactored `getExternalLinksFromPage`
+  - generates a new function to allow for user options, ahead of implementing `exclude` functionality
+- improved validations
+
+---
+
 ## 1.3.2 (04/23/2022)
 
 - added note about `.gitignore`ing `.cache` to `README`
