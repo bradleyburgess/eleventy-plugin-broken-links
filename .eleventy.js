@@ -17,9 +17,12 @@ module.exports = function (eleventyConfig, _options) {
   // validate user-supplied options
   validateUserOptions(_options);
 
-  // merge default and user options
-  const options = { ...defaults, ..._options };
+  // merge default and user options, normalize
+  const options = { ...defaults, ...(_options ?? {}) };
   options.loggingLevel = parseInt(options.loggingLevel);
+  options.cacheDuration = options.cacheDuration.toLowerCase();
+  options.broken = options.broken.toLowerCase();
+  options.redirect = options.redirect.toLowerCase();
 
   // "Lint" each page and gather links
   eleventyConfig.addLinter("getExternalLinksFromPage", getExternalLinksFromPage);
@@ -37,7 +40,7 @@ module.exports = function (eleventyConfig, _options) {
     // okay links
     options.loggingLevel === 3 &&
       okayLinks.forEach((link) => {
-        log().okay(`Link okay:      ${link}`);
+        log().okay().display(`Link okay:      ${link}`);
       });
 
     // redirects
@@ -66,5 +69,3 @@ module.exports = function (eleventyConfig, _options) {
       throw new Error("There are redirect links in your build! See above for details.");
   });
 };
-
-const nope = "no";
