@@ -1,8 +1,12 @@
 # Changelog
 
+## 1.4.2 (04/25/2022)
+
+- fix table bug in `README`
+
 ## 1.4.1 (04/25/2022)
 
-- tweak README for readability
+- tweak README for readability and comprehensiveness
 
 ## 1.4.0 (04/25/2022)
 

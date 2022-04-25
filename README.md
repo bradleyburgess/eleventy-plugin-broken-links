@@ -13,6 +13,9 @@
   - [3. Add `.cache` to `.gitignore`](#3-add-cache-to-gitignore)
   - [(4. Set options)](#4-set-options) 
 - [Options](#options)
+  - [`broken` and `redirect`](#broken-and-redirect)
+  - [`cacheDuration`](#cacheduration)
+  - [`loggingLevel`](#logginglevel)
   - [`excludeUrls`](#excludeurls)
 - [Roadmap / Contributing](#roadmap--contributing)
 
@@ -20,13 +23,14 @@
 
 ## Overview
 
-This is an [11ty](https://www.11ty.dev/) plugin to check for broken external links after a build.
+This is an [11ty](https://www.11ty.dev/) plugin to check for broken external 
+links after a build.
 
-Currently it only checks _external_ links, but I might add internal links at some point. (Feel free 
-to send a PR.)
+Currently it only checks _external_ links, but I might add internal links at 
+some point.
 
-The plugin uses `node-html-parser` and `url-status-code` under the hood, and caches results using 
-`eleventy-fetch`.
+The plugin uses `node-html-parser` and `url-status-code` under the hood, and 
+caches results using `eleventy-fetch`.
 
 ### Features
 
@@ -67,8 +71,8 @@ module.exports = (eleventyConfig) => {
 ### 3. Add `.cache` to `.gitignore`
 
 See [this privacy notice in the `eleventy-fetch` docs](https://www.11ty.dev/docs/plugins/fetch/#installation) 
-about why we should ignore the `.cache` directory. Unless you _really_ know what you're doing, it's 
-probably a good idea.
+about why we should ignore the `.cache` directory. Unless you _really_ know 
+what you're doing, it's probably a good idea.
 
 ```bash
 .cache/
@@ -77,10 +81,11 @@ probably a good idea.
 
 ### (4. Set options)
 
-There are currently 5 possible keys to the optional `options` object passed with `eleventyConfig.addPlugin()`:
+There are currently 5 possible keys to the optional `options` object passed 
+with `eleventyConfig.addPlugin()`:
 
 | Option                             | Default  | Accepted values                                                                                               | Description                        |
-| ---------------------------------- | -------- | ------------| ----------------------------------------------------------------------------------------------- | ---------------------------------- |
+| ---------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
 | [`broken`](#broken-and-redirect)   | `"warn"` | `"warn"`, `"error"`                                                                                           | Whether to warn or throw an error  |
 | [`redirect`](#broken-and-redirect) | `"warn"` | `"warn"`, `"error"`                                                                                           | (same as above)                    |
 | [`cacheDuration`](#cacheduration)  | `"1d"`   | [any value accepted](https://www.11ty.dev/docs/plugins/fetch/#change-the-cache-duration) by `eleventy-fetch`  | Set the duration of the cache      |
@@ -104,8 +109,8 @@ module.exports = (eleventyConfig) => {
 };
 ```
 
-NOTE: If either the `broken` or `redirect` options are set to `error`, your build will not be 
-successful if there are broken/redirected links!
+NOTE: If either the `broken` or `redirect` options are set to `error`, your 
+build will not be successful if there are broken/redirected links!
 
 ---
 
@@ -116,8 +121,8 @@ successful if there are broken/redirected links!
 - __Default: `"warn"`__
 - Accepted: `"warn"` or `"error"`
 
-Whether to `warn` or `error` if broken or redirect links are found. If `error`, builds will not 
-succeed if any are found.
+Whether to `warn` or `error` if broken or redirect links are found. If `error`, 
+builds will not succeed if any are found.
 
 ### `cacheDuration`
 
@@ -172,19 +177,21 @@ But you can also use a wildcard (`*`) to exclude domains or sub-paths. Examples:
 "https://example.com*"         // excludes the root and all paths
 ```
 
-Note that the URLs specified need to be fully-qualified, so sub-domains need to be explicitly indicated.
+Note that the URLs specified need to be fully-qualified, so sub-domains need to 
+be explicitly indicated.
 
 ---
 
 ## Roadmap / Contributing
 
-I don't have a specific roadmap or timeline for this project, but here is a general idea of what the 
-next steps are. If you would like to contribute, please feel free to 
+I don't have a specific roadmap or timeline for this project, but here is a 
+general idea of what the next steps are. If you would like to contribute, 
+please feel free to 
 [file an issue or feature request](https://github.com/bradleyburgess/eleventy-plugin-broken-links/issues), 
 or send a PR.
 
 - [x] cache results (added in `v1.1.0`)
 - [x] allow control over logging (added in `v1.3.0`)
-- [ ] add option to exclude certain urls (specific urls, domains, regex, etc.)
-- [ ] add option to exclude certain input files (specific files, folders, regex, etc.)
+- [x] add option to exclude certain urls (added in `v1.4.0`)
+- [ ] add option to exclude certain input files
 - [ ] add debugging using `debug` to hook into the `DEBUG=Eleventy*` workflow
