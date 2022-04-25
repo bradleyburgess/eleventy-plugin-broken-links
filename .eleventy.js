@@ -1,9 +1,7 @@
-const chalk = require("chalk");
-const store = require("./lib/store");
+const validateUserOptions = require("./lib/validateUserOptions");
 const getExternalLinksFromPage = require("./lib/getExternalLinksFromPage");
 const checkLinkStatuses = require("./lib/checkLinkStatuses");
-const { isBroken, isRedirect } = require("./lib/helpers");
-const validateUserOptions = require("./lib/validateUserOptions");
+const { isBroken, isRedirect, isOkay } = require("./lib/helpers");
 const log = require("./lib/logger");
 
 module.exports = function (eleventyConfig, _options) {
@@ -24,42 +22,42 @@ module.exports = function (eleventyConfig, _options) {
   options.broken = options.broken.toLowerCase();
   options.redirect = options.redirect.toLowerCase();
 
+  // create store of links
+  const store = [];
+
   // "Lint" each page and gather links
-  eleventyConfig.addLinter("getExternalLinksFromPage", getExternalLinksFromPage);
+  eleventyConfig.addLinter("getExternalLinksFromPage", getExternalLinksFromPage(store, options));
 
   eleventyConfig.on("eleventy.after", async () => {
-    await checkLinkStatuses(options.cacheDuration);
-    const allLinks = Object.keys(store);
-    const brokenLinks = allLinks.filter((link) => isBroken(store[link].getHttpStatusCode()));
-    const redirectLinks = allLinks.filter((link) => isRedirect(store[link].getHttpStatusCode()));
-    const okayLinks = allLinks.filter(
-      (link) =>
-        !isBroken(store[link].getHttpStatusCode()) && !isRedirect(store[link].getHttpStatusCode())
-    );
+    await checkLinkStatuses(store, options.cacheDuration);
+
+    const brokenLinks = store.filter((item) => isBroken(item.getHttpStatusCode()));
+    const redirectLinks = store.filter((item) => isRedirect(item.getHttpStatusCode()));
+    const okayLinks = store.filter((item) => isOkay(item.getHttpStatusCode()));
 
     // okay links
     options.loggingLevel === 3 &&
       okayLinks.forEach((link) => {
-        log().okay().display(`Link okay:      ${link}`);
+        log().okay().display(`Link okay:      ${link.url}`);
       });
 
     // redirects
     options.loggingLevel >= 2 &&
       redirectLinks.forEach((link) => {
-        const pages = store[link].getPages();
-        log().warn().display(`Link redirects: ${link}`);
-        log().display(`HTTP Status Code: ${store[link].getHttpStatusCode()}`);
-        log().display(`Used ${store[link].getLinkCount()} time(s) on these pages:`, 2);
+        const pages = link.getPages();
+        log().warn().display(`Link redirects: ${link.url}`);
+        log().display(`HTTP Status Code: ${link.getHttpStatusCode()}`);
+        log().display(`Used ${link.getLinkCount()} time(s) on these pages:`, 2);
         pages.forEach((page) => log().bullet().indent().display(page));
       });
 
     // broken links
     options.loggingLevel >= 1 &&
       brokenLinks.forEach((link) => {
-        const pages = store[link].getPages();
-        log().error().display(`Link is broken: ${link}`);
-        log().display(`HTTP Status Code: ${store[link].getHttpStatusCode()}`);
-        log().display(`Used ${store[link].getLinkCount()} time(s) on these pages:`, 2);
+        const pages = link.getPages();
+        log().error().display(`Link is broken: ${link.url}`);
+        log().display(`HTTP Status Code: ${link.getHttpStatusCode()}`);
+        log().display(`Used ${link.getLinkCount()} time(s) on these pages:`, 2);
         pages.forEach((page) => log().bullet().indent().display(page));
       });
 
