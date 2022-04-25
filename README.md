@@ -9,7 +9,7 @@
   - [(4. Set options)](#4-set-options) 
 - [Options](#options)
   - [`excludeUrls`](#excludeurls)
-- [Roadmap / Contributing](#roadmap-contributing)
+- [Roadmap / Contributing](#roadmap--contributing)
 
 ---
 
