@@ -1,4 +1,18 @@
-## eleventy-plugin-broken-links
+# eleventy-plugin-broken-links
+
+## Table of contents
+
+- [Usage](#usage)
+  - [1. Install the plugin](#1-install-the-plugin)
+  - [2. Add to `.eleventy.js` config](#2-add-to-eleventyjs-config)
+  - [3. Add `.cache` to `.gitignore`](#3-add-cache-to-gitignore)
+  - [(4. Set options)](#4-set-options) 
+- [Options](#options)
+  - [`excludeUrls`](#excludeurls)
+- [Roadmap / Contributing](#roadmap-contributing)
+
+---
+
 
 [![npm](https://img.shields.io/npm/v/eleventy-plugin-broken-links)](https://www.npmjs.com/package/eleventy-plugin-broken-links)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -9,9 +23,9 @@ Currently it only checks _external_ links, but I might add internal links at som
 
 The plugin uses `node-html-parser` and `url-status-code` under the hood, and caches results using `eleventy-fetch`.
 
-### Usage
+## Usage
 
-#### 1. Install the plugin
+### 1. Install the plugin
 
 NPM:
 
@@ -25,7 +39,7 @@ Yarn:
 yarn add -D eleventy-plugin-broken-links
 ```
 
-#### 2. Add to `.eleventy.js` config
+### 2. Add to `.eleventy.js` config
 
 ```js
 const brokenLinksPlugin = require('eleventy-plugin-broken-links');
@@ -36,7 +50,7 @@ module.exports = (eleventyConfig) => {
 };
 ```
 
-#### 3. Add `.cache` to `.gitignore`
+### 3. Add `.cache` to `.gitignore`
 
 See [this privacy notice in the `eleventy-fetch` docs](https://www.11ty.dev/docs/plugins/fetch/#installation) about why we should ignore the `.cache` directory. Unless you _really_ know what you're doing, it's probably a good idea.
 
@@ -45,7 +59,7 @@ See [this privacy notice in the `eleventy-fetch` docs](https://www.11ty.dev/docs
 # ... the rest of your `.gitignore`
 ```
 
-#### (4. Set options)
+### (4. Set options)
 
 There are currently three keys to the optional `option` object passed with `eleventyConfig.addPlugin()`:
 
@@ -55,7 +69,7 @@ There are currently three keys to the optional `option` object passed with `elev
 | `redirect`      | `"warn"` | `"warn"`, `"error"`                                                                                          | same as above                     |
 | `cacheDuration` | `"1d"`   | [any value accepted](https://www.11ty.dev/docs/plugins/fetch/#change-the-cache-duration) by `eleventy-fetch` | set the duration of the cache     |
 | `loggingLevel` | `2` | `0` (silent), `1` (only show broken links), `2` (show broken and redirect), `3` (all) | set the logging level |
-| `excludeUrls` | `[]` | Array of URL strings | Must be an array. Exclude specific URLs, or exclude sub-paths using `*`. See below for more.
+| `excludeUrls` | `[]` | Array of URL strings | Must be an array. Exclude specific URLs, or exclude sub-paths using `*`. [See below for more](##excludeurls).
 
 Here's an example using all options, with the defaults:
 
@@ -76,9 +90,9 @@ module.exports = (eleventyConfig) => {
 
 NOTE: If either the `broken` or `redirect` options are set to `error`, your build will not be successful if there are broken/redirected links!
 
-### Options
+## Options
 
-#### `excludeUrls`
+### `excludeUrls`
 
 You can exclude specific URLs by specifying their fully-qualified uri:
 
@@ -109,7 +123,7 @@ But you can also use a wildcard (`*`) to exclude domains or sub-paths. Examples:
 
 Note that the URLs specified need to be fully-qualified, so sub-domains need to be explicitly indicated.
 
-### Roadmap / Contributing
+## Roadmap / Contributing
 
 I don't have a specific roadmap or timeline for this project, but here is a general idea of what the next steps are. If you would like to contribute, please feel free to [file an issue or feature request](https://github.com/bradleyburgess/eleventy-plugin-broken-links/issues), or send a PR.
 
