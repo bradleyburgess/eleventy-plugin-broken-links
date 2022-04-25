@@ -22,9 +22,11 @@
 
 This is an [11ty](https://www.11ty.dev/) plugin to check for broken external links after a build.
 
-Currently it only checks _external_ links, but I might add internal links at some point. (Feel free to send a PR.)
+Currently it only checks _external_ links, but I might add internal links at some point. (Feel free 
+to send a PR.)
 
-The plugin uses `node-html-parser` and `url-status-code` under the hood, and caches results using `eleventy-fetch`.
+The plugin uses `node-html-parser` and `url-status-code` under the hood, and caches results using 
+`eleventy-fetch`.
 
 ### Features
 
@@ -32,6 +34,8 @@ The plugin uses `node-html-parser` and `url-status-code` under the hood, and cac
 - excluding URLs
 - control of level of logging
 - warn or error on broken or redirected links
+
+---
 
 ## Usage
 
@@ -49,7 +53,7 @@ Yarn:
 yarn add -D eleventy-plugin-broken-links
 ```
 
-### 2. Add to `.eleventy.js` config
+### 2. Add plugin to `.eleventy.js` config
 
 ```js
 const brokenLinksPlugin = require('eleventy-plugin-broken-links');
@@ -62,7 +66,9 @@ module.exports = (eleventyConfig) => {
 
 ### 3. Add `.cache` to `.gitignore`
 
-See [this privacy notice in the `eleventy-fetch` docs](https://www.11ty.dev/docs/plugins/fetch/#installation) about why we should ignore the `.cache` directory. Unless you _really_ know what you're doing, it's probably a good idea.
+See [this privacy notice in the `eleventy-fetch` docs](https://www.11ty.dev/docs/plugins/fetch/#installation) 
+about why we should ignore the `.cache` directory. Unless you _really_ know what you're doing, it's 
+probably a good idea.
 
 ```bash
 .cache/
@@ -71,15 +77,15 @@ See [this privacy notice in the `eleventy-fetch` docs](https://www.11ty.dev/docs
 
 ### (4. Set options)
 
-There are currently three keys to the optional `option` object passed with `eleventyConfig.addPlugin()`:
+There are currently 5 possible keys to the optional `options` object passed with `eleventyConfig.addPlugin()`:
 
-| option          | default  | accepted values                                                                                              | description                       |
-| --------------- | -------- | ------------------------------------------------------------------------------------------------------------ | --------------------------------- |
-| `broken`        | `"warn"` | `"warn"`, `"error"`                                                                                          | whether to warn or throw an error |
-| `redirect`      | `"warn"` | `"warn"`, `"error"`                                                                                          | same as above                     |
-| `cacheDuration` | `"1d"`   | [any value accepted](https://www.11ty.dev/docs/plugins/fetch/#change-the-cache-duration) by `eleventy-fetch` | set the duration of the cache     |
-| `loggingLevel` | `2` | `0` (silent), `1` (only show broken links), `2` (show broken and redirect), `3` (all) | set the logging level |
-| `excludeUrls` | `[]` | Array of URL strings | Must be an array. Exclude specific URLs, or exclude sub-paths using `*`. [See below for more](##excludeurls).
+| Option                             | Default  | Accepted values                                                                                               | Description                        |
+| ---------------------------------- | -------- | ------------| ----------------------------------------------------------------------------------------------- | ---------------------------------- |
+| [`broken`](#broken-and-redirect)   | `"warn"` | `"warn"`, `"error"`                                                                                           | Whether to warn or throw an error  |
+| [`redirect`](#broken-and-redirect) | `"warn"` | `"warn"`, `"error"`                                                                                           | (same as above)                    |
+| [`cacheDuration`](#cacheduration)  | `"1d"`   | [any value accepted](https://www.11ty.dev/docs/plugins/fetch/#change-the-cache-duration) by `eleventy-fetch`  | Set the duration of the cache      |
+| [`loggingLevel`](#logginglevel)    | `2`      | Integer `0` (silent) to `3` (all)                                                                             | Set the logging level              |
+| [`excludeUrls`](#excludeurls)      | `[]`     | Array of URL strings                                                                                          | Exclude specific URLs or wildcards |
 
 Here's an example using all options, with the defaults:
 
@@ -98,11 +104,46 @@ module.exports = (eleventyConfig) => {
 };
 ```
 
-NOTE: If either the `broken` or `redirect` options are set to `error`, your build will not be successful if there are broken/redirected links!
+NOTE: If either the `broken` or `redirect` options are set to `error`, your build will not be 
+successful if there are broken/redirected links!
+
+---
 
 ## Options
 
+### `broken` and `redirect`
+
+- __Default: `"warn"`__
+- Accepted: `"warn"` or `"error"`
+
+Whether to `warn` or `error` if broken or redirect links are found. If `error`, builds will not 
+succeed if any are found.
+
+### `cacheDuration`
+
+- __Default: `"1d"`__
+- Accepted: Anything accepted by `eleventy-fetch` plugin
+
+Sets the cache duration for checking URL status codes. See the 
+[`eleventy-fetch` plugin docs](https://www.11ty.dev/docs/plugins/fetch/#change-the-cache-duration) 
+for more info.
+
+### `loggingLevel`
+
+- __Default: `2`__
+- Accepted: Integer `0` to `3`
+
+| Level | Result                             |
+| ----- | ---------------------------------- |
+| `0`   | Silent                             |
+| `1`   | Only log broken links              |
+| `2`   | Only log broken and redirect links |
+| `3`   | All (verbose)                      |
+
 ### `excludeUrls`
+
+- __Default: `[]`__
+- Accepted: Array of URL strings
 
 You can exclude specific URLs by specifying their fully-qualified uri:
 
@@ -133,9 +174,14 @@ But you can also use a wildcard (`*`) to exclude domains or sub-paths. Examples:
 
 Note that the URLs specified need to be fully-qualified, so sub-domains need to be explicitly indicated.
 
+---
+
 ## Roadmap / Contributing
 
-I don't have a specific roadmap or timeline for this project, but here is a general idea of what the next steps are. If you would like to contribute, please feel free to [file an issue or feature request](https://github.com/bradleyburgess/eleventy-plugin-broken-links/issues), or send a PR.
+I don't have a specific roadmap or timeline for this project, but here is a general idea of what the 
+next steps are. If you would like to contribute, please feel free to 
+[file an issue or feature request](https://github.com/bradleyburgess/eleventy-plugin-broken-links/issues), 
+or send a PR.
 
 - [x] cache results (added in `v1.1.0`)
 - [x] allow control over logging (added in `v1.3.0`)

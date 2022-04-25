@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.1 (04/25/2022)
+
+- tweak README for readability
+
 ## 1.4.0 (04/25/2022)
 
 - added `excludeUrls` option
