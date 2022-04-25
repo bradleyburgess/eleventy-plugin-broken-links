@@ -1,7 +1,12 @@
 # eleventy-plugin-broken-links
 
+[![npm](https://img.shields.io/npm/v/eleventy-plugin-broken-links)](https://www.npmjs.com/package/eleventy-plugin-broken-links)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ## Table of contents
 
+- [Overview](#overview)
+  - [Features](#features)
 - [Usage](#usage)
   - [1. Install the plugin](#1-install-the-plugin)
   - [2. Add to `.eleventy.js` config](#2-add-to-eleventyjs-config)
@@ -13,15 +18,20 @@
 
 ---
 
-
-[![npm](https://img.shields.io/npm/v/eleventy-plugin-broken-links)](https://www.npmjs.com/package/eleventy-plugin-broken-links)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+## Overview
 
 This is an [11ty](https://www.11ty.dev/) plugin to check for broken external links after a build.
 
 Currently it only checks _external_ links, but I might add internal links at some point. (Feel free to send a PR.)
 
 The plugin uses `node-html-parser` and `url-status-code` under the hood, and caches results using `eleventy-fetch`.
+
+### Features
+
+- caching using `eleventy-fetch`
+- excluding URLs
+- control of level of logging
+- warn or error on broken or redirected links
 
 ## Usage
 
