@@ -55,6 +55,7 @@ There are currently three keys to the optional `option` object passed with `elev
 | `redirect`      | `"warn"` | `"warn"`, `"error"`                                                                                          | same as above                     |
 | `cacheDuration` | `"1d"`   | [any value accepted](https://www.11ty.dev/docs/plugins/fetch/#change-the-cache-duration) by `eleventy-fetch` | set the duration of the cache     |
 | `loggingLevel` | `2` | `0` (silent), `1` (only show broken links), `2` (show broken and redirect), `3` (all) | set the logging level |
+| `excludeUrls` | `[]` | Array of URL strings | Must be an array. Exclude specific URLs, or exclude sub-paths using `*`. See below for more.
 
 Here's an example using all options, with the defaults:
 
@@ -67,12 +68,46 @@ module.exports = (eleventyConfig) => {
     redirect: 'warn',
     broken: 'warn',
     cacheDuration: '1d',
-    loggingLevel: 2
+    loggingLevel: 2,
+    excludeUrls: []
   });
 };
 ```
 
 NOTE: If either the `broken` or `redirect` options are set to `error`, your build will not be successful if there are broken/redirected links!
+
+### Options
+
+#### `excludeUrls`
+
+You can exclude specific URLs by specifying their fully-qualified uri:
+
+```js
+excludeUrls: ['https://example.com']
+```
+
+But you can also use a wildcard (`*`) to exclude domains or sub-paths. Examples:
+
+```js
+"https://example.com"          // excludes only the root URL, 
+                               // but sub-paths will be include, 
+                               // e.g. 'https://example.com/about'
+
+"https://example.com/about"    // excludes only '/about', but root and other
+                               // pages are included
+
+"https://example.com/about/*"  // excludes any path nested under 'about', 
+                               // but includes 'about'
+
+"https://example.com/about*"   // excludes any sub-path that begins 
+                               // with `about`, INCLUDING all nested paths
+
+"https://example.com/*"        // excludes all paths, but includes the root
+
+"https://example.com*"         // excludes the root and all paths
+```
+
+Note that the URLs specified need to be fully-qualified, so sub-domains need to be explicitly indicated.
 
 ### Roadmap / Contributing
 

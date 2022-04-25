@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.0 (04/25/2022)
+
+- added `excludeUrls` option
+
+---
+
 ## 1.3.3 (04/25/2022)
 
 - refactored `store` as an `Array` for better manipulation

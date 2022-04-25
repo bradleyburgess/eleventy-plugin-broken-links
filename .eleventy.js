@@ -10,6 +10,7 @@ module.exports = function (eleventyConfig, _options) {
     redirect: "warn",
     cacheDuration: "1d",
     loggingLevel: 2,
+    excludeUrls: [],
   };
 
   // validate user-supplied options
@@ -25,23 +26,25 @@ module.exports = function (eleventyConfig, _options) {
   // create store of links
   const store = [];
 
-  // "Lint" each page and gather links
+  // "Lint" each page and add links to store
   eleventyConfig.addLinter("getExternalLinksFromPage", getExternalLinksFromPage(store, options));
 
   eleventyConfig.on("eleventy.after", async () => {
+    // check the link statuses
     await checkLinkStatuses(store, options.cacheDuration);
 
+    // group links by status
     const brokenLinks = store.filter((item) => isBroken(item.getHttpStatusCode()));
     const redirectLinks = store.filter((item) => isRedirect(item.getHttpStatusCode()));
     const okayLinks = store.filter((item) => isOkay(item.getHttpStatusCode()));
 
-    // okay links
+    // log okay links
     options.loggingLevel === 3 &&
       okayLinks.forEach((link) => {
         log().okay().display(`Link okay:      ${link.url}`);
       });
 
-    // redirects
+    // log redirects
     options.loggingLevel >= 2 &&
       redirectLinks.forEach((link) => {
         const pages = link.getPages();
@@ -51,7 +54,7 @@ module.exports = function (eleventyConfig, _options) {
         pages.forEach((page) => log().bullet().indent().display(page));
       });
 
-    // broken links
+    // log broken links
     options.loggingLevel >= 1 &&
       brokenLinks.forEach((link) => {
         const pages = link.getPages();
@@ -61,6 +64,7 @@ module.exports = function (eleventyConfig, _options) {
         pages.forEach((page) => log().bullet().indent().display(page));
       });
 
+    // check to see if we need to throw an error
     if (options.broken === "error" && brokenLinks.length > 0)
       throw new Error("There are broken links in your build! See above for details.");
     if (options.redirect === "error" && redirectLinks.length > 0)
