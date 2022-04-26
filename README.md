@@ -231,5 +231,5 @@ or send a PR.
 - [x] cache results (added in `v1.1.0`)
 - [x] allow control over logging (added in `v1.3.0`)
 - [x] add option to exclude certain urls (added in `v1.4.0`)
-- [x] add option to exclude certain input files
+- [x] add option to exclude certain input files (added in `v1.5.0`)
 - [ ] add debugging using `debug` to hook into the `DEBUG=Eleventy*` workflow
