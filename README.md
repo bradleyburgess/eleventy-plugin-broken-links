@@ -27,11 +27,9 @@
 This is an [11ty](https://www.11ty.dev/) plugin to check for broken external 
 links after a build.
 
-Currently it only checks _external_ links, but I might add internal links at 
-some point.
+Currently it only checks _external_ links, but checking internal links might be
+added at some point.
 
-The plugin uses `node-html-parser` and `url-status-code` under the hood, and 
-caches results using `eleventy-fetch`.
 
 ### Features
 
@@ -39,6 +37,17 @@ caches results using `eleventy-fetch`.
 - excluding URLs
 - control of level of logging
 - warn or error on broken or redirected links
+- exclude certain URLs or wildcards
+- exclude certain input files or globs
+
+### Dependencies
+
+Under the hood, the plugin uses:
+
+- `node-html-parser` to parse build output and gather links
+- `url-status-code` to check the HTTP status codes
+- `eleventy-fetch` to cache results
+- `minimatch` to handle globbing for excluded input files
 
 ---
 
@@ -233,3 +242,4 @@ or send a PR.
 - [x] add option to exclude certain urls (added in `v1.4.0`)
 - [x] add option to exclude certain input files (added in `v1.5.0`)
 - [ ] add debugging using `debug` to hook into the `DEBUG=Eleventy*` workflow
+- [ ] check internal links
