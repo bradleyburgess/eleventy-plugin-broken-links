@@ -35,12 +35,12 @@
     "eslint": "^8.13.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "minimatch": "^5.0.1",
     "prettier": "^2.6.2"
   },
   "dependencies": {
     "@11ty/eleventy-fetch": "^3.0.0",
     "chalk": "^4.1.0",
+    "minimatch": "^5.0.1",
     "node-html-parser": "^5.3.3",
     "url-status-code": "^2.0.0"
   }
