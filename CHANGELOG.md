@@ -1,12 +1,23 @@
 # Changelog
 
+## 1.5.0 (04/26/2022)
+
+- added validations for `excludeUrls` values
+- added `excludeInputs` feature
+
+---
+
 ## 1.4.2 (04/25/2022)
 
 - fix table bug in `README`
 
+---
+
 ## 1.4.1 (04/25/2022)
 
 - tweak README for readability and comprehensiveness
+
+---
 
 ## 1.4.0 (04/25/2022)
 

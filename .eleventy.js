@@ -11,6 +11,7 @@ module.exports = function (eleventyConfig, _options) {
     cacheDuration: "1d",
     loggingLevel: 2,
     excludeUrls: [],
+    excludeInputs: [],
   };
 
   // validate user-supplied options
@@ -27,7 +28,10 @@ module.exports = function (eleventyConfig, _options) {
   const store = [];
 
   // "Lint" each page and add links to store
-  eleventyConfig.addLinter("getExternalLinksFromPage", getExternalLinksFromPage(store, options));
+  eleventyConfig.addLinter(
+    "getExternalLinksFromPage",
+    getExternalLinksFromPage(store, options, eleventyConfig)
+  );
 
   eleventyConfig.on("eleventy.after", async () => {
     // check the link statuses

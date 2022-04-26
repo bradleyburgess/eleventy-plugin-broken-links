@@ -17,6 +17,7 @@
   - [`cacheDuration`](#cacheduration)
   - [`loggingLevel`](#logginglevel)
   - [`excludeUrls`](#excludeurls)
+  - [`excludeInputs`](#excludeinputs)
 - [Roadmap / Contributing](#roadmap--contributing)
 
 ---
@@ -91,6 +92,7 @@ with `eleventyConfig.addPlugin()`:
 | [`cacheDuration`](#cacheduration)  | `"1d"`   | [any value accepted](https://www.11ty.dev/docs/plugins/fetch/#change-the-cache-duration) by `eleventy-fetch`  | Set the duration of the cache      |
 | [`loggingLevel`](#logginglevel)    | `2`      | Integer `0` (silent) to `3` (all)                                                                             | Set the logging level              |
 | [`excludeUrls`](#excludeurls)      | `[]`     | Array of URL strings                                                                                          | Exclude specific URLs or wildcards |
+| [`excludeInputs`](#excludeinputs)  | `[]`     | Array of globs, **relative to `eleventyConfig.dir.input` value**                                              | Exclude input files / globs        |
 
 Here's an example using all options, with the defaults:
 
@@ -104,7 +106,8 @@ module.exports = (eleventyConfig) => {
     broken: 'warn',
     cacheDuration: '1d',
     loggingLevel: 2,
-    excludeUrls: []
+    excludeUrls: [],
+    excludeInputs: []
   });
 };
 ```
@@ -180,6 +183,41 @@ But you can also use a wildcard (`*`) to exclude domains or sub-paths. Examples:
 Note that the URLs specified need to be fully-qualified, so sub-domains need to 
 be explicitly indicated.
 
+### `excludeInputs`
+
+- __Default: `[]`__
+- Accepted: Array of files or globs, relative to `dir.input`
+
+You can exclude specific input files by providing an array of files or globs.
+
+Please note:
+
+- **All files and globs are relative to the config `dir.input` value**
+- Leading "dot-slash" (`./`) is optional, and is stripped from the input
+  filenames and `excludeInputs` values when normalized before processing
+
+To illustrate these points:
+
+```js
+// - `dir.input` not set in config (`undefined`)
+["index.md"]            // exclude only ./index.md
+["./index.md"]          // identical to above
+
+// - `dir.input` = "src":
+["index.md"]            // exclude ./src/index.md
+```
+
+Globbing is handled by `minimatch` under the hood. Some examples:
+
+```js
+// Some globbing examples:
+["**/index.md"]         // exclude all index.md files recursively
+["**/*.md"]             // exclude all .md files recursively
+["notes/**"]            // exclude all files recursively in 'notes'
+["**/./*.md"]           // exclude all .md files in subdirectories only
+["**/+(foo|bar).md"]    // exclude all files named "foo.md" or "bar.md"
+```
+
 ---
 
 ## Roadmap / Contributing
@@ -193,5 +231,5 @@ or send a PR.
 - [x] cache results (added in `v1.1.0`)
 - [x] allow control over logging (added in `v1.3.0`)
 - [x] add option to exclude certain urls (added in `v1.4.0`)
-- [ ] add option to exclude certain input files
+- [x] add option to exclude certain input files
 - [ ] add debugging using `debug` to hook into the `DEBUG=Eleventy*` workflow
