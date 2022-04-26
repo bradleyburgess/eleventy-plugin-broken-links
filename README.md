@@ -7,6 +7,7 @@
 
 - [Overview](#overview)
   - [Features](#features)
+  - [Dependencies](#dependencies)
 - [Usage](#usage)
   - [1. Install the plugin](#1-install-the-plugin)
   - [2. Add to `.eleventy.js` config](#2-add-to-eleventyjs-config)
