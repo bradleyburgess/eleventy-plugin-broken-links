@@ -9,7 +9,10 @@
     "build": "eleventy",
     "lint": "eslint ./",
     "lint:fix": "eslint ./ --fix",
-    "bump": "npm --no-git-tag-version version"
+    "bump": "npm --no-git-tag-version version",
+    "coverage": "nyc npm test",
+    "test": "ava",
+    "test:watch": "ava --watch"
   },
   "repository": {
     "type": "git",
@@ -32,9 +35,11 @@
   },
   "devDependencies": {
     "@11ty/eleventy": "^1.0.0",
+    "ava": "^4.2.0",
     "eslint": "^8.13.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "nyc": "^15.1.0",
     "prettier": "^2.6.2"
   },
   "dependencies": {

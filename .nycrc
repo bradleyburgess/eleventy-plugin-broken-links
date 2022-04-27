@@ -1,0 +1,10 @@
+{
+  "reporter": [
+    "json",
+    "text-summary"
+  ],
+  "exclude": [
+    "__tests__/**",
+    "lib/**"
+  ]
+}
