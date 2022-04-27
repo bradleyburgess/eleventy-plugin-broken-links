@@ -40,6 +40,7 @@ added at some point.
 - warn or error on broken or redirected links
 - exclude certain URLs or wildcards
 - exclude certain input files or globs
+- 100% test coverage
 
 ### Dependencies
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.5.5 (04/27/2022)
+
+- added remaining tests
+- 100% coverage on all modules
+
+---
+
 ## 1.5.4 (04/27/2022)
 
 - added AVA and NYC
