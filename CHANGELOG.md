@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.5.1 (04/27/2022)
+## 1.5.4 (04/27/2022)
 
 - added AVA and NYC
 - added tests for:
