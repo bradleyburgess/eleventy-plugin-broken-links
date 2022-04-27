@@ -3,3 +3,4 @@ _site
 .cache
 ideas.txt
 .nyc_output/
+coverage/
