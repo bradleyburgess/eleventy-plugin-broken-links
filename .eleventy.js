@@ -1,3 +1,4 @@
+const { defaults } = require("./lib/constants");
 const validateUserOptions = require("./lib/validateUserOptions");
 const getExternalLinksFromPage = require("./lib/getExternalLinksFromPage");
 const checkLinkStatuses = require("./lib/checkLinkStatuses");
@@ -5,15 +6,6 @@ const { isBroken, isRedirect, isOkay } = require("./lib/helpers");
 const log = require("./lib/logger");
 
 module.exports = function (eleventyConfig, _options) {
-  const defaults = {
-    broken: "warn",
-    redirect: "warn",
-    cacheDuration: "1d",
-    loggingLevel: 2,
-    excludeUrls: [],
-    excludeInputs: [],
-  };
-
   // validate user-supplied options
   validateUserOptions(_options);
 

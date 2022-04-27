@@ -1,6 +1,8 @@
 const test = require("ava");
 const {
   isBroken,
+  isNumber,
+  isString,
   isOkay,
   isRedirect,
   isValidCacheDuration,
@@ -10,7 +12,22 @@ const {
   shouldExcludePage,
 } = require("../lib/helpers");
 
-test("broken", (t) => {
+test("isNumber", (t) => {
+  t.true(isNumber(1));
+  t.true(isNumber("1"));
+  t.false(isNumber([]));
+  t.false(isNumber({}));
+  t.false(isNumber("hello"));
+});
+
+test("isString", (t) => {
+  t.true(isString("hello"));
+  t.false(isString(1));
+  t.false(isString([]));
+  t.false(isString({}));
+});
+
+test("isBroken", (t) => {
   const codes = [400, 404, "ENOTFOUND"];
   codes.forEach((code) => {
     t.true(isBroken(code));
@@ -19,7 +36,7 @@ test("broken", (t) => {
   t.false(isBroken(200));
 });
 
-test("redirect", (t) => {
+test("isRedirect", (t) => {
   const codes = [300, 301, 399];
   codes.forEach((code) => t.true(isRedirect(code)));
 

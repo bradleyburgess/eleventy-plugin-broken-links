@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.5.1 (04/27/2022)
+
+- added AVA and NYC
+- added tests for:
+  - `ExternalLink` class
+  - `getExternalLinkFromPage`
+  - `helpers.js`
+  - `validateUserOptions`
+- fixed bug caught by tests which resulted in duplicate `ExternalLink` entries in store
+
+---
+
 ## 1.5.0 (04/26/2022)
 
 - added validations for `excludeUrls` values
