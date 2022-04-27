@@ -12,7 +12,6 @@ const store = linksToCheck.map((link) => new ExternalLink(link));
 
 test("all links have statuses", async (t) => {
   await checkLinkStatuses(store, "1d");
-  console.log(store);
   t.true(store.every((item) => item.getHttpStatusCode() !== null));
   t.true(store.some((link) => link.getHttpStatusCode() == 301));
   t.true(store.some((link) => link.getHttpStatusCode() == 404));

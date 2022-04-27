@@ -17,9 +17,7 @@ test("store is not empty", (t) => {
   const store = [];
   const dummyThis = { inputPath: "./src/index.md" };
   const config = {};
-  const _testFunc = getExternalLinksFromPage(store, defaults, config);
-  const testFunc = _testFunc.bind(dummyThis);
-  testFunc(content);
+  getExternalLinksFromPage(store, defaults, config).call(dummyThis, content);
   t.is(store.length, 3);
 });
 
@@ -27,9 +25,7 @@ test("store contains only ExternalLink items", (t) => {
   const store = [];
   const dummyThis = { inputPath: "./src/index.md" };
   const config = {};
-  const _testFunc = getExternalLinksFromPage(store, defaults, config);
-  const testFunc = _testFunc.bind(dummyThis);
-  testFunc(content);
+  getExternalLinksFromPage(store, defaults, config).call(dummyThis, content);
   t.true(store.every((item) => item instanceof ExternalLink));
 });
 
@@ -37,22 +33,17 @@ test("works with specified dir in config", (t) => {
   const store = [];
   const dummyThis = { inputPath: "./src/index.md" };
   const config = { dir: { input: "src" } };
-  const _testFunc = getExternalLinksFromPage(store, defaults, config);
-  const testFunc = _testFunc.bind(dummyThis);
-  testFunc(content);
+  getExternalLinksFromPage(store, defaults, config).call(dummyThis, content);
   t.is(store.length, 3);
 });
 
 test("works with two pages", (t) => {
   const store = [];
-  const indexPage = { inputPath: "./index.md" };
-  const aboutPage = { inputPath: "./about.md" };
+  const indexThis = { inputPath: "./index.md" };
+  const aboutThis = { inputPath: "./about.md" };
   const config = {};
-  const _testFunc = getExternalLinksFromPage(store, defaults, config);
-  const testFunc1 = _testFunc.bind(indexPage);
-  const testFunc2 = _testFunc.bind(aboutPage);
-  testFunc1(content);
-  testFunc2(content);
+  getExternalLinksFromPage(store, defaults, config).call(indexThis, content);
+  getExternalLinksFromPage(store, defaults, config).call(aboutThis, content);
   // store should still be 3; identical pages
   t.is(store.length, 3);
   t.true(store.every((link) => link.getLinkCount() === 2));
