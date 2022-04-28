@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.5.6 (04/28/2022)
+
+- refactored `eleventy.after` plugin for better testing
+- added tests for:
+  - `logger.js`
+  - `checkLinksAndOutputResults.js`
+- added GitHub workflow for Codecov
+- added Codecov badge to README
+
+---
+
 ## 1.5.5 (04/27/2022)
 
 - added remaining tests
