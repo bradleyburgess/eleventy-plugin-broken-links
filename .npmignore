@@ -3,3 +3,6 @@ _includes
 _site
 .cache
 ideas.txt
+coverage
+.nyc_ouput
+__tests__

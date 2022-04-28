@@ -1,7 +1,8 @@
 {
   "reporter": [
+    "text-summary",
     "json",
-    "text-summary"
+    "lcov"
   ],
   "exclude": [
     "__tests__/**"

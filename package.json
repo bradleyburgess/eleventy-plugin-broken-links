@@ -10,8 +10,8 @@
     "lint": "eslint ./",
     "lint:fix": "eslint ./ --fix",
     "bump": "npm --no-git-tag-version version",
-    "coverage": "nyc npm test",
-    "test": "ava",
+    "coverage": "coverage",
+    "test": "nyc --reporter=lcov ava",
     "test:watch": "ava --watch"
   },
   "repository": {
@@ -36,9 +36,11 @@
   "devDependencies": {
     "@11ty/eleventy": "^1.0.0",
     "ava": "^4.2.0",
+    "codecov": "^3.8.3",
     "eslint": "^8.13.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "ninos": "^3.0.0",
     "nyc": "^15.1.0",
     "prettier": "^2.6.2"
   },
@@ -48,5 +50,11 @@
     "minimatch": "^5.0.1",
     "node-html-parser": "^5.3.3",
     "url-status-code": "^2.0.0"
+  },
+  "ava": {
+    "files": [
+      "__tests__/**/*.js",
+      "**/*.test.js"
+    ]
   }
 }
