@@ -104,3 +104,14 @@ test("callback is called", (t) => {
     store.filter((link) => link.httpStatusCode == 301)
   );
 });
+
+test("callback not called if only okay", (t) => {
+  const { store, options } = t.context.data;
+  const onlyOkayStore = store.filter((link) => link.getHttpStatusCode() == 200);
+  t.context.spy(console, "log", () => {});
+  const s = t.context.stub();
+  options.callback = s;
+  outputResults(onlyOkayStore, options);
+  t.true(onlyOkayStore.length > 0);
+  t.is(s.calls.length, 0);
+});

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.6.1 (04/29/2022)
+
+- updated docs with better example of `callback`
+- ensure `callback` only called if non-okay links
+
+---
+
 ## 1.6.0 (04/29/2022)
 
 - added new `callback` option, which allows for custom handling of `broken` and `redirect` links on top of logging and throwing errors
