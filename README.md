@@ -20,6 +20,7 @@
   - [`loggingLevel`](#logginglevel)
   - [`excludeUrls`](#excludeurls)
   - [`excludeInputs`](#excludeinputs)
+  - [`callback`](#callback)
 - [Roadmap / Contributing](#roadmap--contributing)
 
 ---
@@ -94,17 +95,18 @@ what you're doing, it's probably a good idea.
 
 ### (4. Set options)
 
-There are currently 5 possible keys to the optional `options` object passed 
+There are currently 7 possible keys to the optional `options` object passed 
 with `eleventyConfig.addPlugin()`:
 
-| Option                             | Default  | Accepted values                                                                                               | Description                        |
-| ---------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
-| [`broken`](#broken-and-redirect)   | `"warn"` | `"warn"`, `"error"`                                                                                           | Whether to warn or throw an error  |
-| [`redirect`](#broken-and-redirect) | `"warn"` | `"warn"`, `"error"`                                                                                           | (same as above)                    |
-| [`cacheDuration`](#cacheduration)  | `"1d"`   | [any value accepted](https://www.11ty.dev/docs/plugins/fetch/#change-the-cache-duration) by `eleventy-fetch`  | Set the duration of the cache      |
-| [`loggingLevel`](#logginglevel)    | `2`      | Integer `0` (silent) to `3` (all)                                                                             | Set the logging level              |
-| [`excludeUrls`](#excludeurls)      | `[]`     | Array of URL strings                                                                                          | Exclude specific URLs or wildcards |
-| [`excludeInputs`](#excludeinputs)  | `[]`     | Array of globs, **relative to `eleventyConfig.dir.input` value**                                              | Exclude input files / globs        |
+| Option                             | Default  | Accepted values                                                                                               | Description                          |
+| ---------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
+| [`broken`](#broken-and-redirect)   | `"warn"` | `"warn"`, `"error"`                                                                                           | Whether to warn or throw an error    |
+| [`redirect`](#broken-and-redirect) | `"warn"` | `"warn"`, `"error"`                                                                                           | (same as above)                      |
+| [`cacheDuration`](#cacheduration)  | `"1d"`   | [any value accepted](https://www.11ty.dev/docs/plugins/fetch/#change-the-cache-duration) by `eleventy-fetch`  | Set the duration of the cache        |
+| [`loggingLevel`](#logginglevel)    | `2`      | Integer `0` (silent) to `3` (all)                                                                             | Set the logging level                |
+| [`excludeUrls`](#excludeurls)      | `[]`     | Array of URL strings                                                                                          | Exclude specific URLs or wildcards   |
+| [`excludeInputs`](#excludeinputs)  | `[]`     | Array of globs, **relative to `eleventyConfig.dir.input` value**                                              | Exclude input files / globs          |
+| [`callback`](#callback)            | `null`   | `null` or a `function` with signature `(brokenLinks, redirectLinks) => {}`                                       | Custom callback after checking links |
 
 Here's an example using all options, with the defaults:
 
@@ -119,7 +121,8 @@ module.exports = (eleventyConfig) => {
     cacheDuration: '1d',
     loggingLevel: 2,
     excludeUrls: [],
-    excludeInputs: []
+    excludeInputs: [],
+    callback: null
   });
 };
 ```
@@ -229,6 +232,22 @@ Globbing is handled by `minimatch` under the hood. Some examples:
 ["**/./*.md"]           // exclude all .md files in subdirectories only
 ["**/+(foo|bar).md"]    // exclude all files named "foo.md" or "bar.md"
 ```
+
+### `callback`
+
+- __Default: `null`__
+- Accepted: `null` or a function with signature `(brokenLinks, redirectLink) => {}`
+
+Custom callback for handling broken and redirect links after checking and 
+logging results (and before throwing an error, if option is set). The two 
+arguments, `brokenLinks` and `redirectLinks` are instances of the 
+[`ExternalLink` class](https://github.com/bradleyburgess/eleventy-plugin-broken-links/blob/main/lib/ExternalLink.js), 
+which has the following methods:
+
+- `getHttpStatusCode()`, which returns the HTTP status code
+- `getPages()` which returns an array of Eleventy `inputPath` filenames
+- `getLinkCount()`, which returns the number of times the link is used in the
+  site's pages
 
 ---
 

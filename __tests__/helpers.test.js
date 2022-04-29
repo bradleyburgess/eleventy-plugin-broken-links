@@ -2,6 +2,8 @@ const test = require("ava");
 const {
   isBroken,
   isNumber,
+  isFunction,
+  isNullOrUndefined,
   isString,
   isOkay,
   isRedirect,
@@ -25,6 +27,21 @@ test("isString", (t) => {
   t.false(isString(1));
   t.false(isString([]));
   t.false(isString({}));
+});
+
+test("isFunction", (t) => {
+  t.true(isFunction(function () {}));
+  t.false(isFunction("hello"));
+  t.false(isFunction({}));
+  t.false(isFunction([]));
+});
+
+test("isNullOrUndefined", (t) => {
+  const obj = { key: "value" };
+  t.true(isNullOrUndefined(null));
+  t.true(isNullOrUndefined(undefined));
+  t.true(isNullOrUndefined(obj.hello));
+  t.false(isNullOrUndefined(obj.key));
 });
 
 test("isBroken", (t) => {

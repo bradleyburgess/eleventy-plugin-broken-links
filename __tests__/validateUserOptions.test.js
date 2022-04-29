@@ -64,3 +64,10 @@ test("excludeInputs", (t) => {
   t.throws(testFunc({ excludeInputs: [1] }));
   t.throws(testFunc({ excludeInputs: ["index.md", 1] }));
 });
+
+test("callback", (t) => {
+  t.throws(testFunc({ callback: "hello" }));
+  t.throws(testFunc({ callback: 1 }));
+  t.throws(testFunc({ callback: [] }));
+  t.throws(testFunc({ callback: {} }));
+});

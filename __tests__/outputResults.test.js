@@ -87,3 +87,20 @@ test("throws with 'error'", (t) => {
   t.context.spy(console, "log", () => {});
   t.throws(() => outputResults(store, options));
 });
+
+test("callback is called", (t) => {
+  const { store, options } = t.context.data;
+  t.context.spy(console, "log", () => {});
+  const s = t.context.stub();
+  options.callback = s;
+  outputResults(store, options);
+  t.is(s.calls.length, 1);
+  t.deepEqual(
+    s.calls[0].arguments[0],
+    store.filter((link) => link.httpStatusCode == 404)
+  );
+  t.deepEqual(
+    s.calls[0].arguments[1],
+    store.filter((link) => link.httpStatusCode == 301)
+  );
+});

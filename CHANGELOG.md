@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.6.0 (04/29/2022)
+
+- added new `callback` option, which allows for custom handling of `broken` and `redirect` links on top of logging and throwing errors
+  - this allows for integration with third-party services or notifications, etc.
+
+---
+
 ## 1.5.7 (04/29/2022)
 
 - dropped `chalk@^4` for `kleur`
