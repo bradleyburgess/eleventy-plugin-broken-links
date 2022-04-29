@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.5.7 (04/29/2022)
+
+- dropped `chalk@^4` for `kleur`
+  - later version of `chalk` move to ESM, which adds complication
+  - `kleur` retains familiar syntax, while still allowing up-to-date dependencies
+
+---
+
 ## 1.5.6 (04/28/2022)
 
 - refactored `eleventy.after` plugin for better testing

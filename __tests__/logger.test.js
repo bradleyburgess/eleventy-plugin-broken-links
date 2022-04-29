@@ -1,7 +1,7 @@
 const test = require("ninos")(require("ava"));
 const log = require("../lib/logger");
 const { pre } = require("../lib/logger");
-const chalk = require("chalk");
+const chalk = require("kleur");
 
 test("console.log is called", (t) => {
   const s = t.context.spy(console, "log", () => {});

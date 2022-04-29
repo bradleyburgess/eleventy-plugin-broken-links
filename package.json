@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "@11ty/eleventy-fetch": "^3.0.0",
-    "chalk": "^4.1.0",
+    "kleur": "^4.1.4",
     "minimatch": "^5.0.1",
     "node-html-parser": "^5.3.3",
     "url-status-code": "^2.0.0"

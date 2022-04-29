@@ -50,6 +50,7 @@ Under the hood, the plugin uses:
 - `url-status-code` to check the HTTP status codes
 - `eleventy-fetch` to cache results
 - `minimatch` to handle globbing for excluded input files
+- `kleur` for log coloring / formatting
 
 ---
 
