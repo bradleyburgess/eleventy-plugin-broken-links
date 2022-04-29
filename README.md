@@ -256,7 +256,7 @@ module.exports = (eleventyConfig) => {
   eleventyConfig.addPlugin(brokenLinksPlugin, {
     callback: (brokenLinks, redirectLinks) => {
       thirdPartyService.post({
-        msg: `Your eleventy build had broken links! Links: ${brokenLinks.map(link => link.url).join(", "`,
+        msg: `Your eleventy build had broken links! Links: ${brokenLinks.map(link => link.url).join(", ")}`,
       });
     },
   });
