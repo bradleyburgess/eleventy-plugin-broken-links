@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.0.0 (05/10/2022)
+
+- added `debug`
+- **BREAKING CHANGE:** added `localhost` to default `excludeUrls`
+
+---
+
 ## 1.6.1 (04/29/2022)
 
 - updated docs with better example of `callback`

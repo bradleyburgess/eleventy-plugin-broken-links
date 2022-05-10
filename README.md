@@ -97,15 +97,15 @@ what you're doing, it's probably a good idea.
 There are currently 7 possible keys to the optional `options` object passed
 with `eleventyConfig.addPlugin()`:
 
-| Option                             | Default  | Accepted values                                                                                              | Description                          |
-| ---------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------ | ------------------------------------ |
-| [`broken`](#broken-and-redirect)   | `"warn"` | `"warn"`, `"error"`                                                                                          | Whether to warn or throw an error    |
-| [`redirect`](#broken-and-redirect) | `"warn"` | `"warn"`, `"error"`                                                                                          | (same as above)                      |
-| [`cacheDuration`](#cacheduration)  | `"1d"`   | [any value accepted](https://www.11ty.dev/docs/plugins/fetch/#change-the-cache-duration) by `eleventy-fetch` | Set the duration of the cache        |
-| [`loggingLevel`](#logginglevel)    | `2`      | Integer `0` (silent) to `3` (all)                                                                            | Set the logging level                |
-| [`excludeUrls`](#excludeurls)      | `[]`     | Array of URL strings                                                                                         | Exclude specific URLs or wildcards   |
-| [`excludeInputs`](#excludeinputs)  | `[]`     | Array of globs, **relative to `eleventyConfig.dir.input` value**                                             | Exclude input files / globs          |
-| [`callback`](#callback)            | `null`   | `null` or a `function` with signature `(brokenLinks, redirectLinks) => {}`                                   | Custom callback after checking links |
+| Option                             | Default                                           | Accepted values                                                                                              | Description                          |
+| ---------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ | ------------------------------------ |
+| [`broken`](#broken-and-redirect)   | `"warn"`                                          | `"warn"`, `"error"`                                                                                          | Whether to warn or throw an error    |
+| [`redirect`](#broken-and-redirect) | `"warn"`                                          | `"warn"`, `"error"`                                                                                          | (same as above)                      |
+| [`cacheDuration`](#cacheduration)  | `"1d"`                                            | [any value accepted](https://www.11ty.dev/docs/plugins/fetch/#change-the-cache-duration) by `eleventy-fetch` | Set the duration of the cache        |
+| [`loggingLevel`](#logginglevel)    | `2`                                               | Integer `0` (silent) to `3` (all)                                                                            | Set the logging level                |
+| [`excludeUrls`](#excludeurls)      | `['http://localhost*', 'https://localhost*']`     | Array of URL strings                                                                                         | Exclude specific URLs or wildcards   |
+| [`excludeInputs`](#excludeinputs)  | `[]`                                              | Array of globs, **relative to `eleventyConfig.dir.input` value**                                             | Exclude input files / globs          |
+| [`callback`](#callback)            | `null`                                            | `null` or a `function` with signature `(brokenLinks, redirectLinks) => {}`                                   | Custom callback after checking links |
 
 Here's an example using all options, with the defaults:
 
@@ -164,7 +164,7 @@ for more info.
 
 ### `excludeUrls`
 
-- **Default: `[]`**
+- **Default: `['http://localhost*', 'https://localhost*']`** (new in `2.0.0`)
 - Accepted: Array of URL strings
 
 You can exclude specific URLs by specifying their fully-qualified uri:
@@ -277,5 +277,5 @@ or send a PR.
 - [x] allow control over logging (added in `v1.3.0`)
 - [x] add option to exclude certain urls (added in `v1.4.0`)
 - [x] add option to exclude certain input files (added in `v1.5.0`)
-- [ ] add debugging using `debug` to hook into the `DEBUG=Eleventy*` workflow
+- [x] add debugging using `debug` to hook into the `DEBUG=Eleventy*` workflow (Added in `v2.0.0`)
 - [ ] check internal links
