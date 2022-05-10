@@ -47,10 +47,10 @@ added at some point.
 Under the hood, the plugin uses:
 
 - `node-html-parser` to parse build output and gather links
-- `url-status-code` to check the HTTP status codes
 - `eleventy-fetch` to cache results
 - `minimatch` to handle globbing for excluded input files
 - `kleur` for log coloring / formatting
+- `valid-url` to check if it's a valid uri
 
 ---
 

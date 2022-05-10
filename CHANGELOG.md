@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.0.1 (05/10/2022)
+
+- removed `url-status-code` dependency
+- fixed issue with user agent
+
+---
+
 ## 2.0.0 (05/10/2022)
 
 - added `debug`
