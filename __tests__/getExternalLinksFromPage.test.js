@@ -9,6 +9,7 @@ const content = `<html>
     <li><a href="https://example.com">Link 1</a></li>
     <li><a href="https://google.com">Link 2</a></li>
     <li><a href="https://example.com/broken">Link 3</a></li>
+    <li><a>An empty link</a></li>
   </ul>
 </body>
 </html>`;
