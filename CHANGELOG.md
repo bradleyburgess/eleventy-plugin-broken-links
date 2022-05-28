@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.3 (05/28/2022)
+
+- fixed a bug that threw an error with empty or missing `href`
+
+---
+
 ## 2.0.1 (05/10/2022)
 
 - removed `url-status-code` dependency
