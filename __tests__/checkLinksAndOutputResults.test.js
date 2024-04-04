@@ -15,6 +15,7 @@ const pages = [
         <li><a href="https://example.com">Example.com</a></li>
         <li><a href="https://google.com">Google.com</a></li>
         <li><a href="https://example.com/broken">Broken Link #1</a></li>
+        <li><a href="https://www.raspberrypi.com/software/">Forbidden Link #1</a></li>
     </ul>
 </body>
 </html>`,
@@ -29,6 +30,7 @@ const pages = [
         <li><a href="https://example.com">Example.com</a></li>
         <li><a href="https://yahoo.com">Yahoo.com</a></li>
         <li><a href="https://example.com/broken2">Broken Link #1</a></li>
+        <li><a href="https://www.raspberrypi.com/software/">Forbidden Link #1</a></li>
     </ul>
 </body>
 </html>`,
@@ -49,12 +51,13 @@ test("everything works", async (t) => {
   // check store
   t.true(store.length > 0);
   t.true(store.every((item) => item instanceof ExternalLink));
-  t.is(store.length, 5);
+  t.is(store.length, 6);
   t.is(store.find((item) => item.url === "https://example.com").getLinkCount(), 2);
 
   // check results
   await checkLinksAndOutputResults(store, options)();
   t.true(s.calls.length > 0);
+  t.true(s.calls.some((call) => call.arguments[0].includes("Link forbidden")));
   t.true(s.calls.some((call) => call.arguments[0].includes("Link redirects")));
   t.true(s.calls.some((call) => call.arguments[0].includes("Link is broken")));
 });
