@@ -1,6 +1,6 @@
 {
   "name": "eleventy-plugin-broken-forbiden-links",
-  "version": "1.0.1",
+  "version": "2.1.0",
   "description": "An Eleventy plugin to check for broken external links with extended support for forbidden links",
   "homepage": "https://github.com/Akashic101/eleventy-plugin-broken-links",
   "main": ".eleventy.js",
