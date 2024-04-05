@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.0 (04/04/2024)
+
+- Added option to check for forbidden links
+
+---
+
 ## 2.0.3 (05/28/2022)
 
 - fixed a bug that threw an error with empty or missing `href`

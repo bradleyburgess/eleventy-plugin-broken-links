@@ -15,7 +15,7 @@
   - [3. Add `.cache` to `.gitignore`](#3-add-cache-to-gitignore)
   - [(4. Set options)](#4-set-options)
 - [Options](#options)
-  - [`broken` and `redirect`](#broken-and-redirect)
+  - [`broken`, `redirect` and `forbidden`](#broken-redirect-and-forbidden)
   - [`cacheDuration`](#cacheduration)
   - [`loggingLevel`](#logginglevel)
   - [`excludeUrls`](#excludeurls)
@@ -38,7 +38,7 @@ added at some point.
 - caching using `eleventy-fetch`
 - excluding URLs
 - control of level of logging
-- warn or error on broken or redirected links
+- warn or error on broken, redirected or forbidden links
 - exclude certain URLs or wildcards
 - exclude certain input files or globs
 
@@ -99,7 +99,8 @@ with `eleventyConfig.addPlugin()`:
 
 | Option                             | Default                                           | Accepted values                                                                                              | Description                          |
 | ---------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ | ------------------------------------ |
-| [`broken`](#broken-and-redirect)   | `"warn"`                                          | `"warn"`, `"error"`                                                                                          | Whether to warn or throw an error    |
+| [`forbidden`](#broken-redirect-and-forbidden)| `"warn"`                                          | `"warn"`, `"error"`                                                                                          | Whether to warn or throw an error    |
+| [`broken`](#broken-and-redirect)   | `"warn"`                                          | `"warn"`, `"error"`                                                                                          | (same as above)                      |
 | [`redirect`](#broken-and-redirect) | `"warn"`                                          | `"warn"`, `"error"`                                                                                          | (same as above)                      |
 | [`cacheDuration`](#cacheduration)  | `"1d"`                                            | [any value accepted](https://www.11ty.dev/docs/plugins/fetch/#change-the-cache-duration) by `eleventy-fetch` | Set the duration of the cache        |
 | [`loggingLevel`](#logginglevel)    | `2`                                               | Integer `0` (silent) to `3` (all)                                                                            | Set the logging level                |
@@ -115,6 +116,7 @@ const brokenLinksPlugin = require("eleventy-plugin-broken-links");
 module.exports = (eleventyConfig) => {
   // ... the rest of your config
   eleventyConfig.addPlugin(brokenLinksPlugin, {
+    forbidden: "warn",
     redirect: "warn",
     broken: "warn",
     cacheDuration: "1d",
@@ -126,19 +128,19 @@ module.exports = (eleventyConfig) => {
 };
 ```
 
-NOTE: If either the `broken` or `redirect` options are set to `error`, your
+NOTE: If the `broken`, `redirect` or `forbidden` options are set to `error`, your
 build will not be successful if there are broken/redirected links!
 
 ---
 
 ## Options
 
-### `broken` and `redirect`
+### `broken`, `redirect` and `forbidden`
 
 - **Default: `"warn"`**
 - Accepted: `"warn"` or `"error"`
 
-Whether to `warn` or `error` if broken or redirect links are found. If `error`,
+Whether to `warn` or `error` if broken, redirect or forbidden links are found. If `error`,
 builds will not succeed if any are found.
 
 ### `cacheDuration`
@@ -230,11 +232,11 @@ Globbing is handled by `minimatch` under the hood. Some examples:
 ### `callback`
 
 - **Default: `null`**
-- Accepted: `null` or a function with signature `(brokenLinks, redirectLink) => {}`
+- Accepted: `null` or a function with signature `(brokenLinks, redirectLinks, forbiddenLinks) => {}`
 
-Custom callback for handling broken and redirect links after checking and
-logging results (and before throwing an error, if option is set). The two
-arguments, `brokenLinks` and `redirectLinks` are arrays of instances of the
+Custom callback for handling broken, redirect or forbidden links after checking and
+logging results (and before throwing an error, if option is set). The three
+arguments, `brokenLinks`, `redirectLinks` and `forbiddenLinks` are arrays of instances of the
 [`ExternalLink` class](https://github.com/bradleyburgess/eleventy-plugin-broken-links/blob/main/lib/ExternalLink.js),
 which has the following methods and properties:
 

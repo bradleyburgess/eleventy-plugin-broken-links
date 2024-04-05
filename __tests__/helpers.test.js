@@ -1,5 +1,6 @@
 const test = require("ava");
 const {
+  isForbidden,
   isBroken,
   isNumber,
   isFunction,
@@ -42,6 +43,15 @@ test("isNullOrUndefined", (t) => {
   t.true(isNullOrUndefined(undefined));
   t.true(isNullOrUndefined(obj.hello));
   t.false(isNullOrUndefined(obj.key));
+});
+
+test("isForbidden", (t) => {
+  const codes = [403];
+  codes.forEach((code) => {
+    t.true(isForbidden(code));
+  });
+
+  t.false(isForbidden(200));
 });
 
 test("isBroken", (t) => {

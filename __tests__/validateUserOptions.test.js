@@ -3,6 +3,14 @@ const test = require("ava");
 
 const testFunc = (opts) => () => validateUserOptions(opts);
 
+test("forbidden", (t) => {
+  t.notThrows(testFunc({ forbidden: "warn" }));
+  t.notThrows(testFunc({ forbidden: "error" }));
+  t.throws(testFunc({ forbidden: 1 }));
+  t.throws(testFunc({ forbidden: "" }));
+  t.throws(testFunc({ forbidden: [] }));
+});
+
 test("broken", (t) => {
   t.notThrows(testFunc({ broken: "warn" }));
   t.notThrows(testFunc({ broken: "error" }));

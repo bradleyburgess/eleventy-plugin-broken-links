@@ -11,6 +11,7 @@ module.exports = function (eleventyConfig, _options) {
   const options = { ...defaults, ...(_options ?? {}) };
   options.loggingLevel = parseInt(options.loggingLevel);
   options.cacheDuration = options.cacheDuration.toLowerCase();
+  options.forbidden = options.forbidden.toLowerCase();
   options.broken = options.broken.toLowerCase();
   options.redirect = options.redirect.toLowerCase();
 
