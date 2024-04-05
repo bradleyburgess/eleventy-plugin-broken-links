@@ -1,8 +1,8 @@
 {
-  "name": "eleventy-plugin-broken-links",
-  "version": "2.0.3",
-  "description": "An Eleventy plugin to check for broken external links",
-  "homepage": "https://github.com/bradleyburgess/eleventy-plugin-broken-links",
+  "name": "eleventy-plugin-broken-forbiden-links",
+  "version": "1.0.0",
+  "description": "An Eleventy plugin to check for broken external links with extended support for forbidden links",
+  "homepage": "https://github.com/Akashic101/eleventy-plugin-broken-links",
   "main": ".eleventy.js",
   "scripts": {
     "start": "eleventy --serve",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bradleyburgess/eleventy-plugin-broken-links.git"
+    "url": "git+https://github.com/Akashic101/eleventy-plugin-broken-links"
   },
   "keywords": [
     "11ty",
@@ -24,13 +24,10 @@
     "eleventy-plugin",
     "broken-links"
   ],
-  "author": {
-    "name": "Bradley Burgess",
-    "url": "https://github.com/bradleyburgess"
-  },
+  "author": "David Moll (https://github.com/Akashic101)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/bradleyburgess/eleventy-plugin-broken-links/issues"
+    "url": "https://github.com/Akashic101/eleventy-plugin-broken-links/issues"
   },
   "devDependencies": {
     "@11ty/eleventy": "^1.0.0",
@@ -56,5 +53,8 @@
       "__tests__/**/*.js",
       "**/*.test.js"
     ]
+  },
+  "directories": {
+    "lib": "lib"
   }
 }

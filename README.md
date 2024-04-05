@@ -1,8 +1,10 @@
 # eleventy-plugin-broken-links
 
-[![npm](https://img.shields.io/npm/v/eleventy-plugin-broken-links?style=for-the-badge)](https://www.npmjs.com/package/eleventy-plugin-broken-links)
-![License: MIT](https://img.shields.io/github/license/bradleyburgess/eleventy-plugin-broken-links?color=yellow&style=for-the-badge)
-![Codecov](https://img.shields.io/codecov/c/github/bradleyburgess/eleventy-plugin-broken-links?style=for-the-badge)
+### This is a fork of https://github.com/bradleyburgess/eleventy-plugin-broken-links with added support for forbidden links 
+
+[![npm](https://img.shields.io/npm/v/eleventy-plugin-broken-links?style=for-the-badge)](https://www.npmjs.com/package/eleventy-plugin-broken-forbiden-links)
+![License: MIT](https://img.shields.io/github/license/akashic101/eleventy-plugin-broken-links?color=yellow&style=for-the-badge)
+![Codecov](https://img.shields.io/codecov/c/github/akashic101/eleventy-plugin-broken-links?style=for-the-badge)
 
 ## Table of contents
 
@@ -237,7 +239,7 @@ Globbing is handled by `minimatch` under the hood. Some examples:
 Custom callback for handling broken, redirect or forbidden links after checking and
 logging results (and before throwing an error, if option is set). The three
 arguments, `brokenLinks`, `redirectLinks` and `forbiddenLinks` are arrays of instances of the
-[`ExternalLink` class](https://github.com/bradleyburgess/eleventy-plugin-broken-links/blob/main/lib/ExternalLink.js),
+[`ExternalLink` class](https://github.com/akashic101/eleventy-plugin-broken-links/blob/main/lib/ExternalLink.js),
 which has the following methods and properties:
 
 - `url` property
@@ -272,7 +274,7 @@ module.exports = (eleventyConfig) => {
 I don't have a specific roadmap or timeline for this project, but here is a
 general idea of what the next steps are. If you would like to contribute,
 please feel free to
-[file an issue or feature request](https://github.com/bradleyburgess/eleventy-plugin-broken-links/issues),
+[file an issue or feature request](https://github.com/akashic101/eleventy-plugin-broken-links/issues),
 or send a PR.
 
 - [x] cache results (added in `v1.1.0`)
