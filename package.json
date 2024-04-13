@@ -1,6 +1,6 @@
 {
   "name": "eleventy-plugin-broken-links",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "An Eleventy plugin to check for broken external links",
   "homepage": "https://github.com/bradleyburgess/eleventy-plugin-broken-links",
   "main": ".eleventy.js",
@@ -10,8 +10,8 @@
     "lint": "eslint ./",
     "lint:fix": "eslint ./ --fix",
     "bump": "npm --no-git-tag-version version",
-    "test": "nyc --reporter=lcov ava",
-    "test:watch": "ava --watch"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "repository": {
     "type": "git",
@@ -50,7 +50,7 @@
     "node-html-parser": "^5.3.3",
     "valid-url": "^1.0.9"
   },
-  "ava": {
+  "jest": {
     "files": [
       "__tests__/**/*.js",
       "**/*.test.js"
