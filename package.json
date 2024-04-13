@@ -34,12 +34,11 @@
   },
   "devDependencies": {
     "@11ty/eleventy": "^1.0.0",
-    "ava": "^4.2.0",
     "codecov": "^3.8.3",
     "eslint": "^8.13.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "ninos": "^3.0.0",
+    "jest": "^29.7.0",
     "nyc": "^15.1.0",
     "prettier": "^2.6.2"
   },
