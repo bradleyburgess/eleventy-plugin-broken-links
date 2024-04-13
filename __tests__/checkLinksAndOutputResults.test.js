@@ -1,4 +1,3 @@
-const test = require("ninos")(require("ava"));
 const checkLinksAndOutputResults = require("../lib/checkLinksAndOuputResults");
 const ExternalLink = require("../lib/ExternalLink");
 const getExternalLinksFromPage = require("../lib/getExternalLinksFromPage");
@@ -37,27 +36,29 @@ const pages = [
   },
 ];
 
-test("everything works", async (t) => {
-  const store = [];
-  const s = t.context.spy(console, "log", () => {});
-  const options = { ...defaults };
-  const config = {};
+describe("checkLinksAndOutputResults", () => {
+  test("everything works", async () => {
+    const store = [];
+    const s = jest.spyOn(console, "log").mockImplementation(() => {});
+    const options = { ...defaults };
+    const config = {};
 
-  pages.forEach((page) => {
-    getExternalLinksFromPage(store, options, config).call(page, page.content);
+    pages.forEach((page) => {
+      getExternalLinksFromPage(store, options, config).call(page, page.content);
+    });
+    checkLinksAndOutputResults(store, options);
+
+    // check store
+    expect(store.length).toBeGreaterThan(0);
+    expect(store.every((item) => item instanceof ExternalLink)).toBe(true);
+    expect(store.length).toBe(6);
+    expect(store.find((item) => item.url === "https://example.com").getLinkCount()).toBe(2);
+
+    // check results
+    await checkLinksAndOutputResults(store, options)();
+    expect(s.mock.calls.length).toBeGreaterThan(0);
+    expect(s.mock.calls.some((call) => call[0].includes("Link forbidden"))).toBe(true);
+    expect(s.mock.calls.some((call) => call[0].includes("Link redirects"))).toBe(true);
+    expect(s.mock.calls.some((call) => call[0].includes("Link is broken"))).toBe(true);
   });
-  checkLinksAndOutputResults(store, options);
-
-  // check store
-  t.true(store.length > 0);
-  t.true(store.every((item) => item instanceof ExternalLink));
-  t.is(store.length, 6);
-  t.is(store.find((item) => item.url === "https://example.com").getLinkCount(), 2);
-
-  // check results
-  await checkLinksAndOutputResults(store, options)();
-  t.true(s.calls.length > 0);
-  t.true(s.calls.some((call) => call.arguments[0].includes("Link forbidden")));
-  t.true(s.calls.some((call) => call.arguments[0].includes("Link redirects")));
-  t.true(s.calls.some((call) => call.arguments[0].includes("Link is broken")));
 });
