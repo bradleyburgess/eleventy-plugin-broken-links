@@ -14,10 +14,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
-      - name: Run tests using ava
+      - name: Run tests using jest
         run: |
           npm ci
-          npx nyc --reporter=lcov ava
+          npx jest
       - name: Codecov
         uses: codecov/codecov-action@v3.1.0
       
