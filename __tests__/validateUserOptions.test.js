@@ -1,81 +1,77 @@
 const validateUserOptions = require("../lib/validateUserOptions");
-const test = require("ava");
 
-const testFunc = (opts) => () => validateUserOptions(opts);
+describe("validateUserOptions", () => {
+  const testFunc = (opts) => () => validateUserOptions(opts);
 
-test("forbidden", (t) => {
-  t.notThrows(testFunc({ forbidden: "warn" }));
-  t.notThrows(testFunc({ forbidden: "error" }));
-  t.throws(testFunc({ forbidden: 1 }));
-  t.throws(testFunc({ forbidden: "" }));
-  t.throws(testFunc({ forbidden: [] }));
-});
+  test("forbidden", () => {
+    expect(testFunc({ forbidden: "warn" })).not.toThrow();
+    expect(testFunc({ forbidden: "error" })).not.toThrow();
+    expect(testFunc({ forbidden: 1 })).toThrow();
+    expect(testFunc({ forbidden: "" })).toThrow();
+    expect(testFunc({ forbidden: [] })).toThrow();
+  });
 
-test("broken", (t) => {
-  t.notThrows(testFunc({ broken: "warn" }));
-  t.notThrows(testFunc({ broken: "error" }));
-  t.throws(testFunc({ broken: 1 }));
-  t.throws(testFunc({ broken: "" }));
-  t.throws(testFunc({ broken: [] }));
-});
+  test("broken", () => {
+    expect(testFunc({ broken: "warn" })).not.toThrow();
+    expect(testFunc({ broken: "error" })).not.toThrow();
+    expect(testFunc({ broken: 1 })).toThrow();
+    expect(testFunc({ broken: "" })).toThrow();
+    expect(testFunc({ broken: [] })).toThrow();
+  });
 
-test("redirect", (t) => {
-  t.notThrows(testFunc({ redirect: "warn" }));
-  t.notThrows(testFunc({ redirect: "error" }));
-  t.throws(testFunc({ redirect: 1 }));
-  t.throws(testFunc({ redirect: "" }));
-  t.throws(testFunc({ redirect: [] }));
-});
+  test("redirect", () => {
+    expect(testFunc({ redirect: "warn" })).not.toThrow();
+    expect(testFunc({ redirect: "error" })).not.toThrow();
+    expect(testFunc({ redirect: 1 })).toThrow();
+    expect(testFunc({ redirect: "" })).toThrow();
+    expect(testFunc({ redirect: [] })).toThrow();
+  });
 
-test("loggingLevel", (t) => {
-  // accepted values
-  t.notThrows(testFunc({ loggingLevel: 0 }));
-  t.notThrows(testFunc({ loggingLevel: 1 }));
-  t.notThrows(testFunc({ loggingLevel: 2 }));
-  t.notThrows(testFunc({ loggingLevel: 3 }));
-  // works with number string
-  t.notThrows(testFunc({ loggingLevel: "1" }));
-  // throws on another string or type
-  t.throws(testFunc({ loggingLevel: "hello" }));
-  t.throws(testFunc({ loggingLevel: [] }));
-});
+  test("loggingLevel", () => {
+    expect(testFunc({ loggingLevel: 0 })).not.toThrow();
+    expect(testFunc({ loggingLevel: 1 })).not.toThrow();
+    expect(testFunc({ loggingLevel: 2 })).not.toThrow();
+    expect(testFunc({ loggingLevel: 3 })).not.toThrow();
+    expect(testFunc({ loggingLevel: "1" })).not.toThrow();
+    expect(testFunc({ loggingLevel: "hello" })).toThrow();
+    expect(testFunc({ loggingLevel: [] })).toThrow();
+  });
 
-test("cacheDuration", (t) => {
-  // valid inputs
-  t.notThrows(testFunc({ cacheDuration: "1s" }));
-  t.notThrows(testFunc({ cacheDuration: "1m" }));
-  t.notThrows(testFunc({ cacheDuration: "1h" }));
-  t.notThrows(testFunc({ cacheDuration: "1d" }));
-  t.notThrows(testFunc({ cacheDuration: "1w" }));
-  t.notThrows(testFunc({ cacheDuration: "1y" }));
-  // invalid
-  t.throws(testFunc({ cacheDuration: "0w" }));
-  t.throws(testFunc({ cacheDuration: 1 }));
-  t.throws(testFunc({ cacheDuration: [] }));
-  t.throws(testFunc({ cacheDuration: {} }));
-});
+  test("cacheDuration", () => {
+    expect(testFunc({ cacheDuration: "1s" })).not.toThrow();
+    expect(testFunc({ cacheDuration: "1m" })).not.toThrow();
+    expect(testFunc({ cacheDuration: "1h" })).not.toThrow();
+    expect(testFunc({ cacheDuration: "1d" })).not.toThrow();
+    expect(testFunc({ cacheDuration: "1w" })).not.toThrow();
+    expect(testFunc({ cacheDuration: "1y" })).not.toThrow();
+    expect(testFunc({ cacheDuration: "0w" })).toThrow();
+    expect(testFunc({ cacheDuration: 1 })).toThrow();
+    expect(testFunc({ cacheDuration: [] })).toThrow();
+    expect(testFunc({ cacheDuration: {} })).toThrow();
+  });
 
-test("excludeUrls", (t) => {
-  t.notThrows(testFunc({ excludeUrls: ["https://example.com"] }));
-  t.notThrows(testFunc({ excludeUrls: ["example.com"] }));
-  t.notThrows(testFunc({ excludeUrls: [] }));
-  t.throws(testFunc({ excludeUrls: "https://example.com" }));
-  t.throws(testFunc({ excludeUrls: ["https:/example.com"] }));
-  t.throws(testFunc({ excludeUrls: {} }));
-});
+  test("excludeUrls", () => {
+    expect(testFunc({ excludeUrls: ["https://example.com"] })).not.toThrow();
+    expect(testFunc({ excludeUrls: ["example.com"] })).not.toThrow();
+    expect(testFunc({ excludeUrls: [] })).not.toThrow();
+    expect(testFunc({ excludeUrls: "https://example.com" })).toThrow();
+    expect(testFunc({ excludeUrls: ["https:/example.com"] })).toThrow();
+    expect(testFunc({ excludeUrls: {} })).toThrow();
+  });
 
-test("excludeInputs", (t) => {
-  t.notThrows(testFunc({ excludeInputs: [] }));
-  t.notThrows(testFunc({ excludeInputs: ["index.md"] }));
-  t.throws(testFunc({ excludeInputs: "index.md" }));
-  t.throws(testFunc({ excludeInputs: {} }));
-  t.throws(testFunc({ excludeInputs: [1] }));
-  t.throws(testFunc({ excludeInputs: ["index.md", 1] }));
-});
+  test("excludeInputs", () => {
+    expect(testFunc({ excludeInputs: [] })).not.toThrow();
+    expect(testFunc({ excludeInputs: ["index.md"] })).not.toThrow();
+    expect(testFunc({ excludeInputs: "index.md" })).toThrow();
+    expect(testFunc({ excludeInputs: {} })).toThrow();
+    expect(testFunc({ excludeInputs: [1] })).toThrow();
+    expect(testFunc({ excludeInputs: ["index.md", 1] })).toThrow();
+  });
 
-test("callback", (t) => {
-  t.throws(testFunc({ callback: "hello" }));
-  t.throws(testFunc({ callback: 1 }));
-  t.throws(testFunc({ callback: [] }));
-  t.throws(testFunc({ callback: {} }));
+  test("callback", () => {
+    expect(testFunc({ callback: "hello" })).toThrow();
+    expect(testFunc({ callback: 1 })).toThrow();
+    expect(testFunc({ callback: [] })).toThrow();
+    expect(testFunc({ callback: {} })).toThrow();
+  });
 });

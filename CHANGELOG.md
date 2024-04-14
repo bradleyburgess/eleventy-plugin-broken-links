@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.0 (13/14/2024)
+
+- Replaced Ava and Ninos with Jest
+
 ## 2.1.0 (04/04/2024)
 
 - Added option to check for forbidden links

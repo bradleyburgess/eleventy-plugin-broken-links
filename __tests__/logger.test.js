@@ -1,35 +1,41 @@
-const test = require("ninos")(require("ava"));
 const log = require("../lib/logger");
-const { pre } = require("../lib/logger");
 const chalk = require("kleur");
 
-test("console.log is called", (t) => {
-  const s = t.context.spy(console, "log", () => {});
-  log().display("testing 123");
-  t.is(s.calls.length, 1);
-});
+describe("logger", () => {
+  let consoleSpy;
 
-test("console.log has correct text", (t) => {
-  const s = t.context.spy(console, "log", () => {});
-  log().display("testing 123");
-  t.true(s.calls[0].arguments[0].includes("testing 123"));
-  t.is(s.calls[0].arguments[0], chalk.white(pre + " testing 123"));
-});
+  beforeEach(() => {
+    consoleSpy = jest.spyOn(console, "log").mockImplementation(() => {});
+  });
 
-test("warn has correct color", (t) => {
-  const s = t.context.spy(console, "log", () => {});
-  log().warn().display("testing 123");
-  t.is(s.calls[0].arguments[0], chalk.yellow(pre + " testing 123"));
-});
+  afterEach(() => {
+    consoleSpy.mockRestore();
+  });
 
-test("indent", (t) => {
-  const s = t.context.spy(console, "log", () => {});
-  log().indent().display("testing 123");
-  t.is(s.calls[0].arguments[0], chalk.white(pre + "   testing 123"));
-});
+  test("console.log is called", () => {
+    log().display("testing 123");
+    expect(consoleSpy).toHaveBeenCalled();
+    expect(consoleSpy.mock.calls.length).toBe(1);
+  });
 
-test("bullet", (t) => {
-  const s = t.context.spy(console, "log", () => {});
-  log().bullet().display("testing 123");
-  t.is(s.calls[0].arguments[0], chalk.white(pre + " - testing 123"));
+  test("console.log has correct text", () => {
+    log().display("testing 123");
+    expect(consoleSpy.mock.calls[0][0]).toContain("testing 123");
+    expect(consoleSpy.mock.calls[0][0]).toBe(chalk.white(log().pre + " testing 123"));
+  });
+
+  test("warn has correct color", () => {
+    log().warn().display("testing 123");
+    expect(consoleSpy.mock.calls[0][0]).toBe(chalk.yellow(log().pre + " testing 123"));
+  });
+
+  test("indent", () => {
+    log().indent().display("testing 123");
+    expect(consoleSpy.mock.calls[0][0]).toBe(chalk.white(log().pre + "   testing 123"));
+  });
+
+  test("bullet", () => {
+    log().bullet().display("testing 123");
+    expect(consoleSpy.mock.calls[0][0]).toBe(chalk.white(log().pre + " - testing 123"));
+  });
 });

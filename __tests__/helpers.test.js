@@ -1,4 +1,3 @@
-const test = require("ava");
 const {
   isForbidden,
   isBroken,
@@ -15,125 +14,134 @@ const {
   shouldExcludePage,
 } = require("../lib/helpers");
 
-test("isNumber", (t) => {
-  t.true(isNumber(1));
-  t.true(isNumber("1"));
-  t.false(isNumber([]));
-  t.false(isNumber({}));
-  t.false(isNumber("hello"));
-});
-
-test("isString", (t) => {
-  t.true(isString("hello"));
-  t.false(isString(1));
-  t.false(isString([]));
-  t.false(isString({}));
-});
-
-test("isFunction", (t) => {
-  t.true(isFunction(function () {}));
-  t.false(isFunction("hello"));
-  t.false(isFunction({}));
-  t.false(isFunction([]));
-});
-
-test("isNullOrUndefined", (t) => {
-  const obj = { key: "value" };
-  t.true(isNullOrUndefined(null));
-  t.true(isNullOrUndefined(undefined));
-  t.true(isNullOrUndefined(obj.hello));
-  t.false(isNullOrUndefined(obj.key));
-});
-
-test("isForbidden", (t) => {
-  const codes = [403];
-  codes.forEach((code) => {
-    t.true(isForbidden(code));
+describe("helpers", () => {
+  test("isNumber", () => {
+    expect(isNumber(1)).toBe(true);
+    expect(isNumber("1")).toBe(true);
+    expect(isNumber([])).toBe(false);
+    expect(isNumber({})).toBe(false);
+    expect(isNumber("hello")).toBe(false);
   });
 
-  t.false(isForbidden(200));
-});
-
-test("isBroken", (t) => {
-  const codes = [400, 404, "ENOTFOUND"];
-  codes.forEach((code) => {
-    t.true(isBroken(code));
+  test("isString", () => {
+    expect(isString("hello")).toBe(true);
+    expect(isString(1)).toBe(false);
+    expect(isString([])).toBe(false);
+    expect(isString({})).toBe(false);
   });
 
-  t.false(isBroken(200));
-});
+  test("isFunction", () => {
+    expect(isFunction(function () {})).toBe(true);
+    expect(isFunction("hello")).toBe(false);
+    expect(isFunction({})).toBe(false);
+    expect(isFunction([])).toBe(false);
+  });
 
-test("isRedirect", (t) => {
-  const codes = [300, 301, 399];
-  codes.forEach((code) => t.true(isRedirect(code)));
+  test("isNullOrUndefined", () => {
+    const obj = { key: "value" };
+    expect(isNullOrUndefined(null)).toBe(true);
+    expect(isNullOrUndefined(undefined)).toBe(true);
+    expect(isNullOrUndefined(obj.hello)).toBe(true);
+    expect(isNullOrUndefined(obj.key)).toBe(false);
+  });
 
-  t.false(isRedirect(404));
-});
+  test("isForbidden", () => {
+    const codes = [403];
+    codes.forEach((code) => {
+      expect(isForbidden(code)).toBe(true);
+    });
+    expect(isForbidden(200)).toBe(false);
+  });
 
-test("isOkay", (t) => {
-  t.true(isOkay(200));
-  t.false(isOkay(404));
-});
+  test("isBroken", () => {
+    const codes = [400, 404, "ENOTFOUND"];
+    codes.forEach((code) => {
+      expect(isBroken(code)).toBe(true);
+    });
+    expect(isBroken(200)).toBe(false);
+  });
 
-test("isValidCacheDuration", (t) => {
-  const shouldFail = ["1", "d", ""];
-  const shouldPass = ["1d", "2w", "3y", "40h"];
+  test("isRedirect", () => {
+    const codes = [300, 301, 302, 303, 307, 308, 399];
+    codes.forEach((code) => {
+      expect(isRedirect(code)).toBe(true);
+    });
+    expect(isRedirect(404)).toBe(false);
+  });
 
-  shouldFail.forEach((i) => t.false(isValidCacheDuration(i)));
-  shouldPass.forEach((i) => t.true(isValidCacheDuration(i)));
-});
+  test("isOkay", () => {
+    expect(isOkay(200)).toBe(true);
+    expect(isOkay(404)).toBe(false);
+  });
 
-test("isValidUri", (t) => {
-  const shouldPass = [
-    "https://example.com",
-    "http://www.google.com",
-    "https://www.example.com/about/234blog",
-  ];
-  const shouldFail = [[], "&23.google.com", "h33://google.com", "http:/google.com"];
+  test("isValidCacheDuration", () => {
+    const shouldFail = ["1", "d", ""];
+    const shouldPass = ["1d", "2w", "3y", "40h"];
 
-  shouldPass.forEach((i) => t.true(isValidUri(i)));
-  shouldFail.forEach((i) => t.false(isValidUri(i)));
-});
+    shouldFail.forEach((i) => {
+      expect(isValidCacheDuration(i)).toBe(false);
+    });
+    shouldPass.forEach((i) => {
+      expect(isValidCacheDuration(i)).toBe(true);
+    });
+  });
 
-test("isWarnOrError", (t) => {
-  t.true(isWarnOrError("warn"));
-  t.true(isWarnOrError("error"));
-  t.false(isWarnOrError("sdf"));
-  t.false(isWarnOrError([]));
-});
+  test("isValidUri", () => {
+    const shouldPass = [
+      "https://example.com",
+      "http://www.google.com",
+      "https://www.example.com/about/234blog",
+    ];
+    const shouldFail = [[], "&23.google.com", "h33://google.com", "http:/google.com"];
 
-test("shouldExcludeLink", (t) => {
-  const excludeUrls = ["https://example.com", "https://google.com*", "https://test.com/*"];
+    shouldPass.forEach((i) => {
+      expect(isValidUri(i)).toBe(true);
+    });
+    shouldFail.forEach((i) => {
+      expect(isValidUri(i)).toBe(false);
+    });
+  });
 
-  const testFunc = (url) => shouldExcludeLink(url, excludeUrls);
+  test("isWarnOrError", () => {
+    expect(isWarnOrError("warn")).toBe(true);
+    expect(isWarnOrError("error")).toBe(true);
+    expect(isWarnOrError("sdf")).toBe(false);
+    expect(isWarnOrError([])).toBe(false);
+  });
 
-  t.true(testFunc("https://example.com"));
-  t.true(testFunc("https://google.com"));
-  t.true(testFunc("https://google.com/about"));
-  t.true(testFunc("https://test.com/about"));
+  test("shouldExcludeLink", () => {
+    const excludeUrls = ["https://example.com", "https://google.com*", "https://test.com/*"];
 
-  t.false(testFunc("https://test.com"));
-  t.false(testFunc("https://example.com/about"));
-  t.false(testFunc("https://www.example.com"));
-});
+    const testFunc = (url) => shouldExcludeLink(url, excludeUrls);
 
-test("shouldExcludePage", (t) => {
-  const excludeInputs = ["index.md", "**/about.md", "notes/**"];
+    expect(testFunc("https://example.com")).toBe(true);
+    expect(testFunc("https://google.com")).toBe(true);
+    expect(testFunc("https://google.com/about")).toBe(true);
+    expect(testFunc("https://test.com/about")).toBe(true);
 
-  const testFunc1 = (page) => shouldExcludePage(page, undefined, excludeInputs);
-  t.true(testFunc1("index.md"));
-  t.true(testFunc1("./index.md"));
-  t.true(testFunc1("info/about.md"));
-  t.true(testFunc1("./info/about.md"));
-  t.true(testFunc1("stuff/more/about.md"));
-  t.true(testFunc1("notes/index.md"));
-  t.true(testFunc1("./notes/index.md"));
-  t.false(testFunc1("about/index.md"));
-  t.false(testFunc1("about/notes/index.md"));
+    expect(testFunc("https://test.com")).toBe(false);
+    expect(testFunc("https://example.com/about")).toBe(false);
+    expect(testFunc("https://www.example.com")).toBe(false);
+  });
 
-  const testFunc2 = (page) => shouldExcludePage(page, "./src", excludeInputs);
-  t.true(testFunc2("./src/index.md"));
-  t.true(testFunc2("src/notes/index.md"));
-  t.true(testFunc2("src/info/about.md"));
-  t.false(testFunc2("index.md"));
+  test("shouldExcludePage", () => {
+    const excludeInputs = ["index.md", "**/about.md", "notes/**"];
+
+    const testFunc1 = (page) => shouldExcludePage(page, undefined, excludeInputs);
+    expect(testFunc1("index.md")).toBe(true);
+    expect(testFunc1("./index.md")).toBe(true);
+    expect(testFunc1("info/about.md")).toBe(true);
+    expect(testFunc1("./info/about.md")).toBe(true);
+    expect(testFunc1("stuff/more/about.md")).toBe(true);
+    expect(testFunc1("notes/index.md")).toBe(true);
+    expect(testFunc1("./notes/index.md")).toBe(true);
+    expect(testFunc1("about/index.md")).toBe(false);
+    expect(testFunc1("about/notes/index.md")).toBe(false);
+
+    const testFunc2 = (page) => shouldExcludePage(page, "./src", excludeInputs);
+    expect(testFunc2("./src/index.md")).toBe(true);
+    expect(testFunc2("src/notes/index.md")).toBe(true);
+    expect(testFunc2("src/info/about.md")).toBe(true);
+    expect(testFunc2("index.md")).toBe(false);
+  });
 });
