@@ -11,6 +11,11 @@ describe("getLinkStatusCode", () => {
     expect(httpStatusCode).toBe(404);
   });
 
+  test("returns 403", async () => {
+    const { httpStatusCode } = await getLinkStatusCode("https://codepen.io");
+    expect(httpStatusCode).toBe(403);
+  });
+
   test("returns 301", async () => {
     const { httpStatusCode } = await getLinkStatusCode("https://google.com");
     expect(httpStatusCode).toBe(301);
