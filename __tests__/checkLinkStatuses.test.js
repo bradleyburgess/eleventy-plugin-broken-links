@@ -1,16 +1,10 @@
 const ExternalLink = require("../lib/ExternalLink");
 const checkLinkStatuses = require("../lib/checkLinkStatuses");
+const { linksToCheck } = require("../lib/__mocks__/getLinkStatusCode");
 
-jest.mock("../lib/ExternalLink");
+jest.mock("../lib/getLinkStatusCode");
 
-const linksToCheck = [
-  "https://www.example.com",
-  "https://www.google.com",
-  "https://www.google.com/404",
-  "https://www.raspberrypi.com/software/",
-];
-
-const store = linksToCheck.map((link) => new ExternalLink(link));
+const store = linksToCheck.map((link) => new ExternalLink(link.url));
 
 test("all links have statuses", async () => {
   await checkLinkStatuses(store, "1d");

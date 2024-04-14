@@ -7,7 +7,7 @@ describe("outputResults", () => {
   let consoleLogSpy;
 
   beforeEach(() => {
-    consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+    consoleLogSpy = jest.spyOn(console, "log").mockImplementation(() => {});
 
     const links = [
       { url: "https://example.com", code: 200 },
@@ -39,18 +39,22 @@ describe("outputResults", () => {
   test("contains at least one of each type", () => {
     const { store, options } = data;
     outputResults(store, options);
-    expect(consoleLogSpy.mock.calls.some(call => call[0].includes("Link okay"))).toBe(true);
-    expect(consoleLogSpy.mock.calls.some(call => call[0].includes("Link is broken"))).toBe(true);
-    expect(consoleLogSpy.mock.calls.some(call => call[0].includes("Link redirects"))).toBe(true);
+    expect(consoleLogSpy.mock.calls.some((call) => call[0].includes("Link okay"))).toBe(true);
+    expect(consoleLogSpy.mock.calls.some((call) => call[0].includes("Link is broken"))).toBe(true);
+    expect(consoleLogSpy.mock.calls.some((call) => call[0].includes("Link redirects"))).toBe(true);
   });
 
   test("it outputs status code and pages", () => {
     const { store, options } = data;
     outputResults(store, options);
 
-    const redirectIndex = consoleLogSpy.mock.calls.findIndex(call => call[0].includes("Link redirects"));
+    const redirectIndex = consoleLogSpy.mock.calls.findIndex((call) =>
+      call[0].includes("Link redirects")
+    );
     expect(consoleLogSpy.mock.calls[redirectIndex + 1][0]).toContain("HTTP Status Code: 301");
-    expect(consoleLogSpy.mock.calls[redirectIndex + 2][0]).toContain("Used 1 time(s) on these pages");
+    expect(consoleLogSpy.mock.calls[redirectIndex + 2][0]).toContain(
+      "Used 1 time(s) on these pages"
+    );
     expect(consoleLogSpy.mock.calls[redirectIndex + 3][0]).toContain("- ./src/index.md");
   });
 
@@ -59,9 +63,9 @@ describe("outputResults", () => {
     options.loggingLevel = 2;
     outputResults(store, options);
 
-    expect(consoleLogSpy.mock.calls.every(call => call[0].includes("Link okay"))).toBe(false);
-    expect(consoleLogSpy.mock.calls.some(call => call[0].includes("Link redirects"))).toBe(true);
-    expect(consoleLogSpy.mock.calls.some(call => call[0].includes("Link is broken"))).toBe(true);
+    expect(consoleLogSpy.mock.calls.every((call) => call[0].includes("Link okay"))).toBe(false);
+    expect(consoleLogSpy.mock.calls.some((call) => call[0].includes("Link redirects"))).toBe(true);
+    expect(consoleLogSpy.mock.calls.some((call) => call[0].includes("Link is broken"))).toBe(true);
   });
 
   test("only shows broken with loggingLevel 1", () => {
@@ -69,9 +73,11 @@ describe("outputResults", () => {
     options.loggingLevel = 1;
     outputResults(store, options);
 
-    expect(consoleLogSpy.mock.calls.every(call => call[0].includes("Link okay"))).toBe(false);
-    expect(consoleLogSpy.mock.calls.every(call => call[0].includes("Link redirects"))).toBe(false);
-    expect(consoleLogSpy.mock.calls.some(call => call[0].includes("Link is broken"))).toBe(true);
+    expect(consoleLogSpy.mock.calls.every((call) => call[0].includes("Link okay"))).toBe(false);
+    expect(consoleLogSpy.mock.calls.every((call) => call[0].includes("Link redirects"))).toBe(
+      false
+    );
+    expect(consoleLogSpy.mock.calls.some((call) => call[0].includes("Link is broken"))).toBe(true);
   });
 
   test("no output with loggingLevel 0", () => {
@@ -94,13 +100,17 @@ describe("outputResults", () => {
     options.callback = callbackSpy;
     outputResults(store, options);
     expect(callbackSpy).toHaveBeenCalled();
-    expect(callbackSpy.mock.calls[0][0]).toEqual(store.filter(link => link.httpStatusCode == 404));
-    expect(callbackSpy.mock.calls[0][1]).toEqual(store.filter(link => link.httpStatusCode == 301));
+    expect(callbackSpy.mock.calls[0][0]).toEqual(
+      store.filter((link) => link.httpStatusCode == 404)
+    );
+    expect(callbackSpy.mock.calls[0][1]).toEqual(
+      store.filter((link) => link.httpStatusCode == 301)
+    );
   });
 
   test("callback not called if only okay", () => {
     const { store, options } = data;
-    const onlyOkayStore = store.filter(link => link.getHttpStatusCode() == 200);
+    const onlyOkayStore = store.filter((link) => link.getHttpStatusCode() == 200);
     const callbackSpy = jest.fn();
     options.callback = callbackSpy;
     outputResults(onlyOkayStore, options);
