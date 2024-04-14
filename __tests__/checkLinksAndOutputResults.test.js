@@ -3,6 +3,9 @@ const ExternalLink = require("../lib/ExternalLink");
 const getExternalLinksFromPage = require("../lib/getExternalLinksFromPage");
 const { defaults } = require("../lib/constants");
 
+const SECONDS = 1000;
+jest.setTimeout(10 * SECONDS);
+
 const pages = [
   {
     inputPath: "./src/index.md",
