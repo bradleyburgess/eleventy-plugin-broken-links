@@ -3,6 +3,7 @@
 [![npm](https://img.shields.io/npm/v/eleventy-plugin-broken-links?style=for-the-badge)](https://www.npmjs.com/package/eleventy-plugin-broken-links)
 ![License: MIT](https://img.shields.io/github/license/bradleyburgess/eleventy-plugin-broken-links?color=yellow&style=for-the-badge)
 ![Codecov](https://img.shields.io/codecov/c/github/bradleyburgess/eleventy-plugin-broken-links?style=for-the-badge)
+![11ty](https://img.shields.io/badge/@11ty/eleventy-2.0.1-violet?style=for-the-badge)
 
 ## Table of contents
 
@@ -28,7 +29,9 @@
 ## Overview
 
 This is an [11ty](https://www.11ty.dev/) plugin to check for broken external
-links after a build.
+links after a build. It has been tested with `@11ty/eleventy` versions `1.0.2`
+(final v. 1 release) and `2.0.1` (the latest v. 2 release). When v. 3 is stable,
+we will add support for it.
 
 Currently it only checks _external_ links, but checking internal links might be
 added at some point.
