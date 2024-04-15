@@ -3,7 +3,7 @@
 [![npm](https://img.shields.io/npm/v/eleventy-plugin-broken-links?style=for-the-badge)](https://www.npmjs.com/package/eleventy-plugin-broken-links)
 ![License: MIT](https://img.shields.io/github/license/bradleyburgess/eleventy-plugin-broken-links?color=yellow&style=for-the-badge)
 ![Codecov](https://img.shields.io/codecov/c/github/bradleyburgess/eleventy-plugin-broken-links?style=for-the-badge)
-![11ty](https://img.shields.io/badge/@11ty/eleventy-2.0.1-violet?style=for-the-badge)
+![11ty](https://img.shields.io/badge/@11ty/eleventy-v2.0.1-violet?style=for-the-badge)
 
 ## Table of contents
 
